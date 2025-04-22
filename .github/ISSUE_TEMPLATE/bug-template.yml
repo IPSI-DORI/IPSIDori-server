@@ -1,0 +1,30 @@
+name: "bug-template"
+description: "bug: Bug Title"
+labels: ["🐞 Bug", "🛠️ BE"]
+
+body:
+  - type: textarea
+    attributes:
+      label: 🐛 설명
+      description: 발생한 버그에 대해 간단하고 명확하게 설명해주세요.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 🏷️ 재현 방법
+      description: 버그를 재현할 수 있는 단계를 순서대로 작성해주세요.
+      placeholder: 어떤 순서로 버그가 발생했나요? (ex. 1. ~ 2. ~ 3. ~)
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 기대 동작
+      placeholder: 원래 기대했던 동작에 대해 설명해주세요.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 실제 동작
+      placeholder: 실제로 발생한 동작에 대해 설명해주세요.
+    validations:
+      required: true
