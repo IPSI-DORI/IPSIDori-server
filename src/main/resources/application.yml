@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: dori
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 30
+        format_sql: true
+        jdbc.time_zone: Asia/Seoul
+    show-sql: true
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+---
+
+spring:
+  config:
+    import: classpath:config/IPSIDori-infra/application-dev.yml
+    activate:
+      on-profile: dev
+
+---
+
+spring:
+  config:
+    import: classpath:config/IPSIDori-infra/application-prod.yml
+    activate:
+      on-profile: prod
+
+---
