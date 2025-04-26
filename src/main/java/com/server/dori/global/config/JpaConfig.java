@@ -1,9 +1,8 @@
 package com.server.dori.global.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
-@EnableJpaAuditing
+// @EnableJpaAuditing
 public class JpaConfig {
 }
