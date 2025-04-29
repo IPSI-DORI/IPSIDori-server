@@ -23,7 +23,7 @@ public class TestServiceImpl implements TestService {
 	@Transactional
 	public TestResponseDto createTest(TestRequestDto request) {
 		Test test = Test.builder()
-			.message(request.getMessage())
+			.message(request.message())
 			.build();
 
 		return TestResponseDto.fromEntity(testRepository.save(test));
