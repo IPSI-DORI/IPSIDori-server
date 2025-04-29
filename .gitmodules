@@ -1,0 +1,3 @@
+[submodule "src/main/resources/config/IPSIDori-infra"]
+	path = src/main/resources/config/IPSIDori-infra
+	url = https://github.com/choyeseol/IPSIDori-infra.git
