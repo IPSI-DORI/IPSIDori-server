@@ -22,26 +22,6 @@ test {
 	finalizedBy jacocoTestReport
 }
 
-jacocoTestReport {
-	dependsOn test
-	reports {
-		xml.required = true
-		html.required = true
-	}
-	afterEvaluate {
-		println "Class directories before filtering: ${classDirectories.files}"
-
-		classDirectories.setFrom(
-				files(
-						classDirectories.files.collect {
-							fileTree(dir: it, includes: ['**/service/**', '**/entity/**'])
-						}
-				)
-		)
-	}
-
-}
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -60,17 +40,34 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-
-
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	// 테스트
-	runtimeOnly 'com.h2database:h2'
+
+	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	// testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'com.h2database:h2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+	}
+	afterEvaluate {
+		println "Class directories before filtering: ${classDirectories.files}"
+
+		classDirectories.setFrom(
+				files(
+						classDirectories.files.collect {
+							fileTree(dir: it, includes: ['**/service/**', '**/entity/**'])
+						}
+				)
+		)
+	}
+
 }
