@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     image: choyeseol07/ipsidori:latest
-    container_name: ipsidori-app
+    container_name: ipsidori
     ports:
       - "8080:8080"
     environment:
