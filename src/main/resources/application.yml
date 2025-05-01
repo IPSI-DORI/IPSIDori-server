@@ -8,6 +8,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
         default_batch_fetch_size: 30
         format_sql: true
         jdbc.time_zone: Asia/Seoul
@@ -21,7 +22,7 @@ server:
 
 spring:
   config:
-    import: classpath:config/IPSIDori-infra/application-dev.yml
+    import: classpath:config/application-dev.yml
     activate:
       on-profile: dev
 
@@ -29,7 +30,7 @@ spring:
 
 spring:
   config:
-    import: classpath:config/IPSIDori-infra/application-prod.yml
+    import: classpath:config/application-prod.yml
     activate:
       on-profile: prod
 
