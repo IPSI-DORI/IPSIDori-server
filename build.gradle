@@ -18,8 +18,13 @@ jacoco {
     toolVersion = "0.8.8"
 }
 
+def hasTestTargets = file('src/main/java/com/server/service').exists() ||
+        file('src/main/java/com/server/entity').exists()
+
 test {
+    useJUnitPlatform()
     finalizedBy jacocoTestReport
+    onlyIf { hasTestTargets }
 }
 
 configurations {
@@ -48,12 +53,9 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
 jacocoTestReport {
     dependsOn test
+    onlyIf { hasTestTargets }
     reports {
         xml.required = true
         html.required = true
