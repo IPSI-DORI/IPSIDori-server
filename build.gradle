@@ -1,75 +1,74 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.4'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id 'jacoco'
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
 }
 
 group = 'com.server'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 jacoco {
-	toolVersion = "0.8.8"
+    toolVersion = "0.8.8"
 }
 
 def hasTestTargets = file('src/main/java/com/server/service').exists() ||
-		file('src/main/java/com/server/entity').exists()
+        file('src/main/java/com/server/entity').exists()
 
 test {
-	useJUnitPlatform()
-	finalizedBy jacocoTestReport
-	onlyIf { hasTestTargets }
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+    onlyIf { hasTestTargets }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
-	// test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.h2database:h2'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 jacocoTestReport {
-	dependsOn test
-	onlyIf { hasTestTargets }
-	reports {
-		xml.required = true
-		html.required = true
-	}
-	afterEvaluate {
-		println "Class directories before filtering: ${classDirectories.files}"
+    dependsOn test
+    onlyIf { hasTestTargets }
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    afterEvaluate {
+        println "Class directories before filtering: ${classDirectories.files}"
 
-		classDirectories.setFrom(
-				files(
-						classDirectories.files.collect {
-							fileTree(dir: it, includes: ['**/service/**', '**/entity/**'])
-						}
-				)
-		)
-	}
-
+        classDirectories.setFrom(
+                files(
+                        classDirectories.files.collect {
+                            fileTree(dir: it, includes: ['**/service/**', '**/entity/**'])
+                        }
+                )
+        )
+    }
 }
