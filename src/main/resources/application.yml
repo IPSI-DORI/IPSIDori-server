@@ -21,7 +21,7 @@ server:
 
 spring:
   config:
-    import: classpath:config/IPSIDori-infra/application-dev.yml
+    import: classpath:config/application-dev.yml
     activate:
       on-profile: dev
 
@@ -29,7 +29,7 @@ spring:
 
 spring:
   config:
-    import: classpath:config/IPSIDori-infra/application-prod.yml
+    import: classpath:config/application-prod.yml
     activate:
       on-profile: prod
 

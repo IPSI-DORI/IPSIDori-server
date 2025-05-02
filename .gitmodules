@@ -1,3 +1,3 @@
-[submodule "src/main/resources/config/IPSIDori-infra"]
-	path = src/main/resources/config/IPSIDori-infra
-	url = https://github.com/choyeseol/IPSIDori-infra.git
+[submodule "src/main/resources/config"]
+	path = src/main/resources/config
+	url = https://github.com/IPSI-DORI/server-submodule.git
