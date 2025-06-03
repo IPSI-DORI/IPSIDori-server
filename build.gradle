@@ -38,6 +38,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':config')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -59,6 +60,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    runtimeOnly 'com.h2database:h2'
+
+    // Swagger UI
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 }
 
 jacocoTestReport {
@@ -79,4 +85,18 @@ jacocoTestReport {
                 )
         )
     }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources', 'config/src/main/resources']
+            // yml 파일을 명시적으로 포함
+            includes = ['**/*.yml', '**/*.yaml']
+        }
+    }
+}
+
+tasks.withType(Copy) {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
