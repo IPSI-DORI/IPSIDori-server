@@ -11,15 +11,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.server.dori.domain.auth.exception.AuthErrorStatus;
+import com.server.dori.domain.auth.presentation.dto.TokenDto;
+import com.server.dori.domain.auth.service.AuthService;
 import com.server.dori.global.jwt.JwtFilter;
+import com.server.dori.global.oauth2.CustomOAuth2UserService;
+import com.server.dori.global.response.ApiResponseDto;
 import com.server.dori.global.response.exception.ApiErrorResponseDto;
-import com.server.dori.global.response.exception.CommonErrorStatus;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +36,8 @@ public class WebSecurityConfig {
 
 	private final JwtFilter jwtFilter;
 	private final ObjectMapper objectMapper;
+	private final AuthService authService;
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
@@ -40,28 +47,65 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
 		http
-			// 경로 인가 설정
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/v1/signup/**", "/api/v1/login", "/api/v1/auth/**", "/api/v1/oauth2/**")
-				.permitAll()
+				// 스웨거
+				.requestMatchers(
+					"/swagger-ui/**",
+					"/v3/api-docs/**",
+					"/swagger-resources/**",
+					"/webjars/**"
+				).permitAll()
+				// 인증
+				.requestMatchers(
+					"/oauth2/authorization/**",
+					"/api/v1/auth/oauth2/kakao",
+					"/api/v1/auth/signup",
+					"/api/v1/auth/reissue"
+				).permitAll()
 				.anyRequest()
 				.authenticated())
 
-			// jwt 사용 명시
+			.oauth2Login(oauth2 -> oauth2
+				// 인증 요청
+				.authorizationEndpoint(endpoint -> endpoint
+					.baseUri("/oauth2/authorization"))
+
+				// 리다이렉션
+				.redirectionEndpoint(endpoint -> endpoint
+					.baseUri("/api/v1/auth/oauth2/*"))
+
+				// 유저 정보
+				.userInfoEndpoint(endpoint -> endpoint
+					.userService(customOAuth2UserService))
+
+				// 인증 성공
+				.successHandler((request, response, authentication) -> {
+					OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal();
+					TokenDto tokenDto = authService.oauth2Login(oauth2User);
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.ok(tokenDto)));
+				})
+
+				// 인증 실패
+				.failureHandler((request, response, exception) -> {
+					response.setContentType("application/json;charset=UTF-8");
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(AuthErrorStatus.OAUTH_USER_NOT_FOUND);
+					response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+				}))
+
+			// JWT
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 
-			// jwt 핸들링
 			.exceptionHandling(exception -> exception
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint())
 				.accessDeniedHandler(jwtAccessDeniedHandler()))
 
-			// jwt 필터
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
@@ -83,7 +127,7 @@ public class WebSecurityConfig {
 		return ((request, response, authException) -> {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(CommonErrorStatus.UNAUTHORIZED);
+			ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(AuthErrorStatus.INVALID_TOKEN);
 			response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
 		});
 	}
@@ -93,7 +137,7 @@ public class WebSecurityConfig {
 		return (request, response, accessDeniedException) -> {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(CommonErrorStatus.FORBIDDEN);
+			ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(AuthErrorStatus.INVALID_TOKEN);
 			response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
 		};
 	}
