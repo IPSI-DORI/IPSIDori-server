@@ -1,4 +1,1 @@
 rootProject.name = 'dori'
-
-include 'config'
-project(':config').projectDir = new File(settingsDir, 'src/main/resources/config')
