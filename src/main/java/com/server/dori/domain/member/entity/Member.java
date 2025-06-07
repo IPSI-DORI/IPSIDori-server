@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.server.dori.domain.member.presentation.dto.ProfileUpdateDto;
 import com.server.dori.global.common.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,6 +19,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -48,47 +50,10 @@ public class Member extends BaseEntity implements UserDetails {
 	@Column(nullable = false)
 	private SocialType socialType;
 
-	@Column(nullable = true)
 	private String socialId;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true)
-	private Grade grade;
-
-	@Column(nullable = true)
-	private String currentUniversity;
-
-	@Column(nullable = true)
-	private String currentMajor;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true)
-	private Subject koreanSubject;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true)
-	private Subject mathSubject;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true)
-	private Subject inquirySubject1;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true)
-	private Subject inquirySubject2;
-
-	@Column(nullable = true)
-	private String targetUniversity;
-
-	@Column(nullable = true)
-	private String targetMajor;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true)
-	private LearningStyle learningStyle;
-
-	@Column(nullable = true)
-	private Integer learningStyleScore;
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private MemberProfile profile;
 
 	@Builder
 	public Member(String email, String nickname, Role role, SocialType socialType, String socialId) {
@@ -99,31 +64,32 @@ public class Member extends BaseEntity implements UserDetails {
 		this.socialId = socialId;
 	}
 
-	public void updateProfile(ProfileUpdateDto profileDto) {
-		this.grade = profileDto.grade();
-		this.currentUniversity = profileDto.currentUniversity();
-		this.currentMajor = profileDto.currentMajor();
-		this.koreanSubject = profileDto.koreanSubject();
-		this.mathSubject = profileDto.mathSubject();
-		this.inquirySubject1 = profileDto.inquirySubject1();
-		this.inquirySubject2 = profileDto.inquirySubject2();
-		this.targetUniversity = profileDto.targetUniversity();
-		this.targetMajor = profileDto.targetMajor();
+	public void initializeProfile() {
+		this.profile = new MemberProfile();
+	}
 
-		if (profileDto.learningStyleScore() != null) {
-			this.learningStyle = LearningStyle.fromScore(profileDto.learningStyleScore());
-			this.learningStyleScore = profileDto.learningStyleScore();
+	public void updateProfile(ProfileUpdateDto profileDto) {
+		if (this.profile == null) {
+			initializeProfile();
 		}
+
+		this.profile.updateProfile(
+			profileDto.grade(),
+			profileDto.currentUniversity(),
+			profileDto.currentMajor(),
+			profileDto.targetUniversity(),
+			profileDto.targetMajor(),
+			LearningStyle.fromScore(profileDto.learningStyleScore()),
+			profileDto.learningStyleScore()
+		);
 	}
 
 	public boolean isProfileCompleted() {
-		return grade != null && koreanSubject != null && mathSubject != null && inquirySubject1 != null
-			   && inquirySubject2 != null && targetUniversity != null && !targetUniversity.isBlank()
-			   && targetMajor != null && !targetMajor.isBlank() && learningStyle != null;
+		return profile != null && profile.isProfileCompleted();
 	}
 
 	public boolean isRetryStudent() {
-		return grade == Grade.RETRY_1 || grade == Grade.RETRY_2;
+		return profile != null && profile.isRetryStudent();
 	}
 
 	@Override

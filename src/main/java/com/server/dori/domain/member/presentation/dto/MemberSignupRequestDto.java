@@ -1,7 +1,6 @@
 package com.server.dori.domain.member.presentation.dto;
 
 import com.server.dori.domain.member.entity.Grade;
-import com.server.dori.domain.member.entity.Subject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -29,18 +28,6 @@ public record MemberSignupRequestDto(
 
 	@Schema(description = "현재 전공 (재수/반수인 경우 필수)", example = "컴퓨터공학과")
 	String currentMajor,
-
-	@Schema(description = "국어 과목", example = "KOREAN_READING")
-	@NotNull Subject koreanSubject,
-
-	@Schema(description = "수학 과목", example = "MATH_1")
-	@NotNull Subject mathSubject,
-
-	@Schema(description = "탐구 과목 1", example = "PHYSICS_1")
-	@NotNull Subject inquirySubject1,
-
-	@Schema(description = "탐구 과목 2", example = "CHEMISTRY_1")
-	@NotNull Subject inquirySubject2,
 
 	@Schema(description = "목표 대학교", example = "서울대학교")
 	@NotBlank String targetUniversity,

@@ -1,5 +1,7 @@
 package com.server.dori.domain.member.entity;
 
+import com.server.dori.domain.member.exception.MemberException;
+import com.server.dori.domain.member.exception.MemberErrorStatus;
 import lombok.Getter;
 
 public enum LearningStyle {
@@ -48,6 +50,6 @@ public enum LearningStyle {
 				return style;
 			}
 		}
-		throw new IllegalArgumentException("유효하지 않은 점수입니다: " + score);
+		throw new MemberException(MemberErrorStatus.INVALID_LEARNING_STYLE_SCORE);
 	}
 }
