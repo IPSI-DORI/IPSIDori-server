@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.test.entity.Test;
 import com.server.dori.domain.test.entity.repository.TestRepository;
-import com.server.dori.domain.test.exception.TestErrorStatus;
-import com.server.dori.domain.test.exception.TestException;
+import com.server.dori.domain.test.exception.TestBadRequestException;
+import com.server.dori.domain.test.exception.TestNotFoundException;
 import com.server.dori.domain.test.presentation.dto.TestRequestDto;
 import com.server.dori.domain.test.presentation.dto.TestResponseDto;
 import com.server.dori.domain.test.service.TestService;
@@ -32,12 +32,12 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public TestResponseDto getTest(Long id) {
 		return TestResponseDto.fromEntity(testRepository.findById(id)
-			.orElseThrow(() -> new TestException(TestErrorStatus.TEST_NOT_FOUND)));
+			.orElseThrow(() -> TestNotFoundException.testNotFound()));
 	}
 
 	@Override
 	public void throwCustomException() {
-		throw new TestException(TestErrorStatus.TEST_BAD_REQUEST);
+		throw TestBadRequestException.testBadRequest();
 	}
 
 	@Override
