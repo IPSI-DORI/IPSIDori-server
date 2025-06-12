@@ -1,4 +1,4 @@
-package com.server.dori.domain.auth.presentation.dto;
+package com.server.dori.domain.auth.presentation.dto.response;
 
 import jakarta.validation.constraints.NotNull;
 
