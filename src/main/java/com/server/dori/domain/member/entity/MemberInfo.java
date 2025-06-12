@@ -17,20 +17,24 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "member_profiles")
+@Table(name = "member_infos")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberProfile extends BaseEntity {
+public class MemberInfo extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Setter
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
+
+	private String nickname;
 
 	@Enumerated(EnumType.STRING)
 	private Grade grade;
@@ -48,11 +52,10 @@ public class MemberProfile extends BaseEntity {
 
 	private Integer learningStyleScore;
 
-	private String profileImageUrl;
-
-	public void updateProfile(Grade grade, String currentUniversity, String currentMajor,
+	public void updateForSignup(String nickname, Grade grade, String currentUniversity, String currentMajor,
 		String targetUniversity, String targetMajor,
 		LearningStyle learningStyle, Integer learningStyleScore) {
+		this.nickname = nickname;
 		this.grade = grade;
 		this.currentUniversity = currentUniversity;
 		this.currentMajor = currentMajor;
@@ -62,16 +65,20 @@ public class MemberProfile extends BaseEntity {
 		this.learningStyleScore = learningStyleScore;
 	}
 
-	public void updateProfileImage(String profileImageUrl) {
-		this.profileImageUrl = profileImageUrl;
+	public void updateInfo(String nickname, Grade grade, String targetUniversity, String targetMajor) {
+		this.nickname = nickname;
+		this.grade = grade;
+		this.targetUniversity = targetUniversity;
+		this.targetMajor = targetMajor;
 	}
 
-	public boolean isProfileCompleted() {
+	// TODO - 이미지 매핑
+	public String getProfileImageUrl() {
+		return null;
+	}
+
+	public boolean isMemberInfoCompleted() {
 		return grade != null && targetUniversity != null && !targetUniversity.isBlank()
 			&& targetMajor != null && !targetMajor.isBlank() && learningStyle != null;
-	}
-
-	public boolean isRetryStudent() {
-		return grade == Grade.RETRY_1 || grade == Grade.RETRY_2;
 	}
 }

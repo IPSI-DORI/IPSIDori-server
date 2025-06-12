@@ -46,5 +46,4 @@ public enum Subject {
 	Subject(String description) {
 		this.description = description;
 	}
-
 }

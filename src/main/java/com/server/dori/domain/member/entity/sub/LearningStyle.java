@@ -1,7 +1,6 @@
 package com.server.dori.domain.member.entity.sub;
 
-import com.server.dori.domain.member.exception.MemberErrorStatus;
-import com.server.dori.domain.member.exception.MemberException;
+import com.server.dori.domain.member.exception.MemberInvalidException;
 
 import lombok.Getter;
 
@@ -51,6 +50,6 @@ public enum LearningStyle {
 				return style;
 			}
 		}
-		throw new MemberException(MemberErrorStatus.INVALID_LEARNING_STYLE_SCORE);
+		throw MemberInvalidException.invalidLearningStyleScore();
 	}
 }

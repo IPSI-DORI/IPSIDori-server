@@ -1,26 +1,22 @@
-package com.server.dori.domain.member.presentation.dto;
+package com.server.dori.domain.member.presentation.dto.request;
 
 import com.server.dori.domain.member.entity.sub.Grade;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-@Schema(description = "회원가입 요청 DTO")
+@Schema(description = "회원가입 요청 DTO (토큰에서 사용자 정보 자동 추출)")
 public record MemberSignupRequestDto(
-	@Schema(description = "카카오 소셜 ID", example = "123456789")
-	@NotBlank String socialId,
-
-	@Schema(description = "이메일", example = "user@example.com")
-	@Email @NotBlank String email,
-
 	@Schema(description = "닉네임", example = "홍길동")
 	@NotBlank String nickname,
 
-	@Schema(description = "학년", example = "HIGH_1")
+	@Schema(description = "학년<br> " + "HIGH_1: 고등학교 1학년<br> " + "HIGH_2: 고등학교 2학년<br> " + "HIGH_3: 고등학교 3학년<br> "
+		+ "RETRY_1: 재수<br> " + "RETRY_2: 반수",
+		example = "HIGH_1",
+		allowableValues = {"HIGH_1", "HIGH_2", "HIGH_3", "RETRY_1", "RETRY_2"})
 	@NotNull Grade grade,
 
 	@Schema(description = "현재 대학교 (재수/반수인 경우 필수)", example = "서울대학교")
@@ -48,7 +44,7 @@ public record MemberSignupRequestDto(
 	@NotNull @Min(1) @Max(4) int motivationAnswer
 ) {
 	public boolean isRetryStudent() {
-		return grade == Grade.RETRY_1 || grade == Grade.RETRY_2;
+		return grade != null && grade.isRetry();
 	}
 
 	public boolean isRetryStudentInfoValid() {

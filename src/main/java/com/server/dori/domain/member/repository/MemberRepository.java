@@ -1,4 +1,4 @@
-package com.server.dori.domain.member.entity.repository;
+package com.server.dori.domain.member.repository;
 
 import java.util.Optional;
 
