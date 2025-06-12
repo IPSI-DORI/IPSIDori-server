@@ -1,4 +1,4 @@
-package com.server.dori.domain.member.entity;
+package com.server.dori.domain.member.entity.sub;
 
 import lombok.Getter;
 

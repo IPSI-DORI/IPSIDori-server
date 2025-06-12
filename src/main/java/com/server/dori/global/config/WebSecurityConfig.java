@@ -18,9 +18,10 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.server.dori.domain.auth.exception.AuthErrorStatus;
-import com.server.dori.domain.auth.presentation.dto.TokenDto;
-import com.server.dori.domain.auth.service.AuthService;
+import com.server.dori.domain.auth.exception.AuthNotFoundException;
+import com.server.dori.domain.auth.exception.AuthUnauthorizedException;
+import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
+import com.server.dori.domain.auth.service.QueryAuthService;
 import com.server.dori.global.jwt.JwtFilter;
 import com.server.dori.global.oauth2.CustomOAuth2UserService;
 import com.server.dori.global.response.ApiResponseDto;
@@ -36,7 +37,7 @@ public class WebSecurityConfig {
 
 	private final JwtFilter jwtFilter;
 	private final ObjectMapper objectMapper;
-	private final AuthService authService;
+	private final QueryAuthService queryAuthService;
 	private final CustomOAuth2UserService customOAuth2UserService;
 
 	@Bean
@@ -82,7 +83,7 @@ public class WebSecurityConfig {
 				// 인증 성공
 				.successHandler((request, response, authentication) -> {
 					OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal();
-					TokenDto tokenDto = authService.oauth2Login(oauth2User);
+					TokenDto tokenDto = queryAuthService.oauth2Login(oauth2User);
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.ok(tokenDto)));
 				})
@@ -91,7 +92,13 @@ public class WebSecurityConfig {
 				.failureHandler((request, response, exception) -> {
 					response.setContentType("application/json;charset=UTF-8");
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(AuthErrorStatus.OAUTH_USER_NOT_FOUND);
+					AuthNotFoundException authException = AuthNotFoundException.oauthUserNotFound();
+					ApiErrorResponseDto errorResponse = new ApiErrorResponseDto(
+						false,
+						authException.getCode(),
+						authException.getMessage(),
+						null
+					);
 					response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
 				}))
 
@@ -127,7 +134,13 @@ public class WebSecurityConfig {
 		return ((request, response, authException) -> {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(AuthErrorStatus.INVALID_TOKEN);
+			AuthUnauthorizedException authException2 = AuthUnauthorizedException.invalidToken();
+			ApiErrorResponseDto errorResponse = new ApiErrorResponseDto(
+				false,
+				authException2.getCode(),
+				authException2.getMessage(),
+				null
+			);
 			response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
 		});
 	}
@@ -137,7 +150,13 @@ public class WebSecurityConfig {
 		return (request, response, accessDeniedException) -> {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			ApiErrorResponseDto errorResponse = ApiErrorResponseDto.of(AuthErrorStatus.INVALID_TOKEN);
+			AuthUnauthorizedException authException = AuthUnauthorizedException.invalidToken();
+			ApiErrorResponseDto errorResponse = new ApiErrorResponseDto(
+				false,
+				authException.getCode(),
+				authException.getMessage(),
+				null
+			);
 			response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
 		};
 	}

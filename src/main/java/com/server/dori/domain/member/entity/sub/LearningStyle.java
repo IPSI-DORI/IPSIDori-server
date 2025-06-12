@@ -1,7 +1,8 @@
-package com.server.dori.domain.member.entity;
+package com.server.dori.domain.member.entity.sub;
 
-import com.server.dori.domain.member.exception.MemberException;
 import com.server.dori.domain.member.exception.MemberErrorStatus;
+import com.server.dori.domain.member.exception.MemberException;
+
 import lombok.Getter;
 
 public enum LearningStyle {

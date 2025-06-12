@@ -1,6 +1,6 @@
 package com.server.dori.domain.member.presentation.dto;
 
-import com.server.dori.domain.member.entity.Grade;
+import com.server.dori.domain.member.entity.sub.Grade;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -36,16 +36,16 @@ public record MemberSignupRequestDto(
 	@NotBlank String targetMajor,
 
 	@Schema(description = "개념 학습 유형 답변 (1-4)", example = "1")
-	@NotNull @Min(1) @Max(4) Integer conceptualAnswer,
+	@NotNull @Min(1) @Max(4) int conceptualAnswer,
 
 	@Schema(description = "문제풀이 유형 답변 (1-4)", example = "2")
-	@NotNull @Min(1) @Max(4) Integer problemSolvingAnswer,
+	@NotNull @Min(1) @Max(4) int problemSolvingAnswer,
 
 	@Schema(description = "준비성 유형 답변 (1-4)", example = "3")
-	@NotNull @Min(1) @Max(4) Integer preparationAnswer,
+	@NotNull @Min(1) @Max(4) int preparationAnswer,
 
 	@Schema(description = "동기부여 유형 답변 (1-4)", example = "4")
-	@NotNull @Min(1) @Max(4) Integer motivationAnswer
+	@NotNull @Min(1) @Max(4) int motivationAnswer
 ) {
 	public boolean isRetryStudent() {
 		return grade == Grade.RETRY_1 || grade == Grade.RETRY_2;
@@ -56,6 +56,6 @@ public record MemberSignupRequestDto(
 			return true;
 		}
 		return currentUniversity != null && !currentUniversity.isBlank()
-			   && currentMajor != null && !currentMajor.isBlank();
+			&& currentMajor != null && !currentMajor.isBlank();
 	}
 }

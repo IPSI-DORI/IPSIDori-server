@@ -1,8 +1,9 @@
 package com.server.dori.domain.member.entity;
 
+import com.server.dori.domain.member.entity.sub.Grade;
+import com.server.dori.domain.member.entity.sub.LearningStyle;
 import com.server.dori.global.common.BaseEntity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
