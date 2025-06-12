@@ -15,8 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.server.dori.domain.auth.exception.AuthErrorStatus;
-import com.server.dori.domain.auth.exception.AuthException;
+import com.server.dori.domain.auth.exception.AuthUnauthorizedException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,9 +27,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
@@ -44,7 +41,7 @@ public class JwtTokenProvider {
 
 	@PostConstruct
 	public void init() {
-		String secretKey = jwtProperties.getSecretKey();
+		String secretKey = jwtProperties.secretKey();
 		if (secretKey == null || secretKey.getBytes(StandardCharsets.UTF_8).length < MIN_SECRET_KEY_LENGTH) {
 			throw new IllegalArgumentException("JWT secret key must be at least 32 characters long");
 		}
@@ -58,7 +55,7 @@ public class JwtTokenProvider {
 			.collect(Collectors.joining(AUTHORITIES_DELIMITER));
 
 		long now = System.currentTimeMillis();
-		Date validity = new Date(now + jwtProperties.getAccessTokenValidityInMilliseconds());
+		Date validity = new Date(now + jwtProperties.accessTokenValidityInMilliseconds());
 
 		return Jwts.builder()
 			.setSubject(authentication.getName())
@@ -71,7 +68,7 @@ public class JwtTokenProvider {
 
 	public String createRefreshToken(Authentication authentication) {
 		long now = (new Date()).getTime();
-		Date validity = new Date(now + jwtProperties.getRefreshTokenValidityInMilliseconds());
+		Date validity = new Date(now + jwtProperties.refreshTokenValidityInMilliseconds());
 
 		return Jwts.builder()
 			.setSubject(authentication.getName())
@@ -96,9 +93,9 @@ public class JwtTokenProvider {
 			UserDetails principal = new User(claims.getSubject(), "", authorities);
 			return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 		} catch (ExpiredJwtException e) {
-			throw new AuthException(AuthErrorStatus.EXPIRED_TOKEN);
+			throw AuthUnauthorizedException.expiredToken();
 		} catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
-			throw new AuthException(AuthErrorStatus.INVALID_TOKEN);
+			throw AuthUnauthorizedException.invalidToken();
 		}
 	}
 
@@ -107,11 +104,9 @@ public class JwtTokenProvider {
 			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 			return true;
 		} catch (ExpiredJwtException e) {
-			log.info("만료된 JWT 토큰입니다.");
-			throw new AuthException(AuthErrorStatus.EXPIRED_TOKEN);
+			throw AuthUnauthorizedException.expiredToken();
 		} catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
-			log.info("유효하지 않은 JWT 토큰입니다.");
-			throw new AuthException(AuthErrorStatus.INVALID_TOKEN);
+			throw AuthUnauthorizedException.invalidToken();
 		}
 	}
 }
