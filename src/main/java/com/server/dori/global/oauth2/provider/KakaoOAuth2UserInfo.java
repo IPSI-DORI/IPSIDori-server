@@ -1,4 +1,4 @@
-package com.server.dori.global.oauth2.userinfo;
+package com.server.dori.global.oauth2.provider;
 
 import java.util.Collections;
 import java.util.Map;
@@ -20,11 +20,11 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
 		this.attributes = attributes;
 		this.kakaoAccount = Optional.ofNullable(attributes.get(KAKAO_ACCOUNT))
 			.filter(Map.class::isInstance)
-			.map(map -> (Map<String, Object>) map)
+			.map(map -> (Map<String, Object>)map)
 			.orElse(Collections.emptyMap());
 		this.profile = Optional.ofNullable(attributes.get(PROFILE))
 			.filter(Map.class::isInstance)
-			.map(map -> (Map<String, Object>) map)
+			.map(map -> (Map<String, Object>)map)
 			.orElse(Collections.emptyMap());
 	}
 

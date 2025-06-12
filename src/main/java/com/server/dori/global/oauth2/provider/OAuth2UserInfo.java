@@ -1,4 +1,4 @@
-package com.server.dori.global.oauth2.userinfo;
+package com.server.dori.global.oauth2.provider;
 
 public interface OAuth2UserInfo {
 	String getId();

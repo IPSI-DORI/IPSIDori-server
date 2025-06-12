@@ -14,10 +14,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.server.dori.domain.member.entity.Member;
-import com.server.dori.domain.member.entity.Role;
-import com.server.dori.domain.member.entity.SocialType;
-import com.server.dori.domain.member.entity.repository.MemberRepository;
-import com.server.dori.global.oauth2.dto.OAuthAttributes;
+import com.server.dori.domain.member.entity.sub.Role;
+import com.server.dori.domain.member.entity.sub.SocialType;
+import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +40,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 
-		OAuthAttributes extractAttributes = OAuthAttributes.of(registrationId, userNameAttributeName, attributes);
+		OAuth2Attributes extractAttributes = OAuth2Attributes.of(registrationId, userNameAttributeName, attributes);
 
 		Member member = getUser(extractAttributes, registrationId);
 
@@ -51,13 +50,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 			extractAttributes.nameAttributeKey());
 	}
 
-	private Member getUser(OAuthAttributes attributes, String registrationId) {
+	private Member getUser(OAuth2Attributes attributes, String registrationId) {
 		SocialType socialType = getSocialType(registrationId);
 		String socialId = attributes.oAuth2UserInfo().getId();
 
 		Optional<Member> findMember = memberRepository.findBySocialTypeAndSocialId(socialType, socialId);
 
-		return findMember.orElseGet(() -> saveMember(attributes, socialType, socialId));
+		return findMember.orElseGet(() -> createTemporaryMember(attributes, socialType, socialId));
 	}
 
 	private SocialType getSocialType(String registrationId) {
@@ -67,7 +66,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		return SocialType.NONE;
 	}
 
-	private Member saveMember(OAuthAttributes attributes, SocialType socialType, String socialId) {
+	private Member createTemporaryMember(OAuth2Attributes attributes, SocialType socialType, String socialId) {
+		// 임시 회원 생성 (추가 정보 없음)
 		Member member = Member.builder()
 			.email(attributes.oAuth2UserInfo().getEmail())
 			.nickname(attributes.oAuth2UserInfo().getNickname())
