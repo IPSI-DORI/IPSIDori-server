@@ -12,7 +12,6 @@ env:
   DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
 jobs:
   build-and-push-docker:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +35,7 @@ jobs:
         run: |
           docker build . --file Dockerfile --tag ${{ env.DOCKER_IMAGE_NAME }}:latest \
           --cache-from=${{ env.DOCKER_IMAGE_NAME }}:latest \
-          --platform linux/amd64    
+          --platform linux/amd64
 
       - name: Login to Docker Hub using Access Token
         run: |
@@ -46,14 +45,10 @@ jobs:
         run: docker push ${{env.DOCKER_IMAGE_NAME}}:latest
 
   deploy-to-ec2:
-
     needs: build-and-push-docker
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -61,11 +56,25 @@ jobs:
           username: ${{ env.SERVER_USER }}
           key: ${{ env.SERVER_PASSWORD }}
           port: 22
-          envs: GITHUB_SHA
           script: |
-            cd IPSIDori-server
-            git pull origin main
-            sudo docker compose down
-            sudo docker compose rm -f
-            sudo docker rmi ${{env.DOCKER_IMAGE_NAME}}:latest
-            sudo docker compose up -d
+            # docker-project 디렉토리로 이동
+            cd docker-project
+
+            # 최신 백엔드 이미지 pull
+            sudo docker pull ${{env.DOCKER_IMAGE_NAME}}:latest
+
+            # 기존 백엔드 컨테이너만 정리 (인프라는 유지)
+            sudo docker stop ipsidori || true
+            sudo docker rm ipsidori || true
+
+            # docker-compose로 인프라 서비스 실행 (네트워크 자동 생성)
+            sudo docker-compose up -d
+
+            # 백엔드 컨테이너 실행 (기존 네트워크 사용)
+            sudo docker run -d \
+              --name ipsidori \
+              --network ipsidori_default \
+              -p 8080:8080 \
+              --env-file ./.env \
+              --restart always \
+              ${{env.DOCKER_IMAGE_NAME}}:latest
