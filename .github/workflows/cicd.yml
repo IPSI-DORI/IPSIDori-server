@@ -24,8 +24,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: "17"
+          distribution: "temurin"
 
       - name: Pull the existing Docker image (if any)
         run: |
@@ -70,11 +70,11 @@ jobs:
             # docker-compose로 인프라 서비스 실행 (네트워크 자동 생성)
             sudo docker-compose up -d
 
-            # 백엔드 컨테이너 실행 (기존 네트워크 사용)
+            # 백엔드 컨테이너 실행
             sudo docker run -d \
               --name ipsidori \
               --network ipsidori_default \
               -p 8080:8080 \
-              --env-file ./.env \
+              --env-file ../config/.env \
               --restart always \
               ${{env.DOCKER_IMAGE_NAME}}:latest
