@@ -24,7 +24,7 @@ public class CommandMemberService {
 		return memberUpdater.updateMemberWithAdditionalInfo(member, requestDto);
 	}
 
-	public Member updateMyInfo(String email, MemberInfoUpdateDto requestDto) {
+	public Member updateMemberInfo(String email, MemberInfoUpdateDto requestDto) {
 		Member member = memberReader.getMemberByEmail(email);
 		return memberUpdater.updateInfo(member, requestDto);
 	}
