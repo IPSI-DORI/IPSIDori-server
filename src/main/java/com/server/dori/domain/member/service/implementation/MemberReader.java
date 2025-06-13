@@ -28,4 +28,9 @@ public class MemberReader {
 		return memberRepository.findByEmail(email)
 			.orElseThrow(MemberNotFoundException::memberNotFoundException);
 	}
+
+	public Member getMember(Long memberId) {
+		return memberRepository.findById(memberId)
+			.orElseThrow(MemberNotFoundException::memberNotFoundException);
+	}
 }

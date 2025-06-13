@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.server.dori.domain.member.entity.CustomUserDetails;
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.exception.MemberNotFoundException;
 import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdateDto;
@@ -80,13 +81,13 @@ public class MemberController {
 	@GetMapping("/info")
 	public ResponseEntity<ApiResponseDto<MemberSimpleResponseDto>> getMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
-		@AuthenticationPrincipal UserDetails userDetails
+		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
 		if (userDetails == null) {
 			throw MemberNotFoundException.memberNotFoundException();
 		}
 
-		Member member = queryMemberService.getMemberInfoByEmail(userDetails.getUsername());
+		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
 		return ApiResponseDto.ok(MemberSimpleResponseDto.from(member));
 	}
 
@@ -104,12 +105,12 @@ public class MemberController {
 	@GetMapping("/info/detail")
 	public ResponseEntity<ApiResponseDto<MemberInfoResponseDto>> getMemberInfoDetail(
 		@Parameter(description = "현재 로그인한 사용자 정보")
-		@AuthenticationPrincipal UserDetails userDetails
+		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
 		if (userDetails == null) {
 			throw MemberNotFoundException.memberNotFoundException();
 		}
-		Member member = queryMemberService.getMemberInfoByEmail(userDetails.getUsername());
+		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
 		return ApiResponseDto.ok(MemberInfoResponseDto.from(member));
 	}
 
@@ -126,7 +127,7 @@ public class MemberController {
 	@PutMapping("/info")
 	public ResponseEntity<ApiResponseDto<MemberInfoResponseDto>> updateMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
-		@AuthenticationPrincipal UserDetails userDetails,
+		@AuthenticationPrincipal CustomUserDetails userDetails,
 		@Valid @RequestBody MemberInfoUpdateDto requestDto
 	) {
 		if (userDetails == null) {
@@ -134,7 +135,7 @@ public class MemberController {
 		}
 
 		Member updatedMember = commandMemberService.updateMemberInfo(
-			userDetails.getUsername(),
+			userDetails.getMemberId(),
 			requestDto
 		);
 		return ApiResponseDto.ok(MemberInfoResponseDto.from(updatedMember));

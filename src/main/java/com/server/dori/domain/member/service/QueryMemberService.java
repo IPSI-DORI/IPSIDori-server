@@ -14,12 +14,8 @@ public class QueryMemberService {
 	private final MemberReader memberReader;
 	private final MemberValidator memberValidator;
 
-	public Member getMemberByEmail(String email) {
-		return memberReader.getMemberByEmail(email);
-	}
-
-	public Member getMemberInfoByEmail(String email) {
-		Member member = memberReader.getMemberByEmail(email);
+	public Member getMemberInfo(Long memberId) {
+		Member member = memberReader.getMember(memberId);
 		memberValidator.validateMemberCompleted(member);
 		return member;
 	}
