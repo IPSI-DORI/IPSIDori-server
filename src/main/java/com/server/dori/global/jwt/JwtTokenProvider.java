@@ -11,11 +11,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.server.dori.domain.auth.exception.AuthUnauthorizedException;
+import com.server.dori.domain.member.entity.CustomUserDetails;
+import com.server.dori.domain.member.entity.Member;
+import com.server.dori.domain.member.service.implementation.MemberReader;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -37,6 +39,7 @@ public class JwtTokenProvider {
 	private static final String AUTHORITIES_KEY = "auth";
 
 	private final JwtProperties jwtProperties;
+	private final MemberReader memberReader;
 	private Key key;
 
 	@PostConstruct
@@ -90,7 +93,10 @@ public class JwtTokenProvider {
 					.map(SimpleGrantedAuthority::new)
 					.collect(Collectors.toList());
 
-			UserDetails principal = new User(claims.getSubject(), "", authorities);
+			String email = claims.getSubject();
+			Member member = memberReader.getMemberByEmail(email);
+			UserDetails principal = new CustomUserDetails(member);
+
 			return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 		} catch (ExpiredJwtException e) {
 			throw AuthUnauthorizedException.expiredToken();
