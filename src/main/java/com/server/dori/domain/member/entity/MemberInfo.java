@@ -50,7 +50,7 @@ public class MemberInfo extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private LearningStyle learningStyle;
 
-	private Integer learningStyleScore;
+	private int learningStyleScore;
 
 	public void updateForSignup(String nickname, Grade grade, String currentUniversity, String currentMajor,
 		String targetUniversity, String targetMajor,
