@@ -15,9 +15,9 @@ import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.exception.MemberNotFoundException;
 import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdateDto;
 import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequestDto;
+import com.server.dori.domain.member.presentation.dto.response.MemberInfoDetailResponseDto;
 import com.server.dori.domain.member.presentation.dto.response.MemberInfoResponseDto;
 import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponseDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberSimpleResponseDto;
 import com.server.dori.domain.member.service.CommandMemberService;
 import com.server.dori.domain.member.service.QueryMemberService;
 import com.server.dori.global.response.ApiResponseDto;
@@ -64,12 +64,12 @@ public class MemberController {
 		}
 
 		Member updatedMember = commandMemberService.signup(userDetails.getUsername(), requestDto);
-		return ApiResponseDto.ok(MemberSignupResponseDto.from(updatedMember));
+		return ApiResponseDto.ok(queryMemberService.createSignupResponse(updatedMember));
 	}
 
 	@Operation(
 		summary = "회원 기본 정보",
-		description = "회원 기본 정보를 조회합니다. (닉네임만 반환)"
+		description = "회원 기본 정보를 조회합니다. (닉네임, 프로필 이미지 URL)"
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -79,7 +79,7 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/info")
-	public ResponseEntity<ApiResponseDto<MemberSimpleResponseDto>> getMemberInfo(
+	public ResponseEntity<ApiResponseDto<MemberInfoResponseDto>> getMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
@@ -88,12 +88,12 @@ public class MemberController {
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
-		return ApiResponseDto.ok(MemberSimpleResponseDto.from(member));
+		return ApiResponseDto.ok(queryMemberService.createInfoResponse(member));
 	}
 
 	@Operation(
 		summary = "회원 상세 정보",
-		description = "회원 상세 정보를 조회합니다. (닉네임, 학년, 희망 대학교, 희망 전공)"
+		description = "회원 상세 정보를 조회합니다. (닉네임, 학년, 희망 대학교, 희망 전공, 프로필 이미지 URL)"
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -103,15 +103,16 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/info/detail")
-	public ResponseEntity<ApiResponseDto<MemberInfoResponseDto>> getMemberInfoDetail(
+	public ResponseEntity<ApiResponseDto<MemberInfoDetailResponseDto>> getMemberInfoDetail(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
 		if (userDetails == null) {
 			throw MemberNotFoundException.memberNotFoundException();
 		}
+
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
-		return ApiResponseDto.ok(MemberInfoResponseDto.from(member));
+		return ApiResponseDto.ok(queryMemberService.createInfoDetailResponse(member));
 	}
 
 	@Operation(
@@ -125,7 +126,7 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PutMapping("/info")
-	public ResponseEntity<ApiResponseDto<MemberInfoResponseDto>> updateMemberInfo(
+	public ResponseEntity<ApiResponseDto<MemberInfoDetailResponseDto>> updateMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails,
 		@Valid @RequestBody MemberInfoUpdateDto requestDto
@@ -138,6 +139,6 @@ public class MemberController {
 			userDetails.getMemberId(),
 			requestDto
 		);
-		return ApiResponseDto.ok(MemberInfoResponseDto.from(updatedMember));
+		return ApiResponseDto.ok(queryMemberService.createInfoDetailResponse(updatedMember));
 	}
 }
