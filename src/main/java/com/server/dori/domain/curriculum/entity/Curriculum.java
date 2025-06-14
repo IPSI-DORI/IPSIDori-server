@@ -53,7 +53,7 @@ public class Curriculum {
 		this.studyDays = studyDays;
 		this.question1 = question1;
 		this.question2 = question2;
-		this.createdAt = createdAt;
+		this.createdAt = LocalDateTime.now();
 		this.platform = platform;
 	}
 }

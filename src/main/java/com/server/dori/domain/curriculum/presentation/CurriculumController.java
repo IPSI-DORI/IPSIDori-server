@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
-import com.server.dori.domain.curriculum.service.CurriculumCommandService;
+import com.server.dori.domain.curriculum.service.CommandCuriculumService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/curriculum")
 public class CurriculumController {
-	private final CurriculumCommandService curriculumCommandService;
+	private final CommandCuriculumService commandCuriculumService;
 
 	@PostMapping("/survey")
 	public ResponseEntity<CurriculumSurveyResponse> saveSurvey(@RequestBody CurriculumSurveyRequest request) {
-		CurriculumSurveyResponse response = curriculumCommandService.saveSurvey(request);
+		CurriculumSurveyResponse response = commandCuriculumService.saveSurvey(request);
 
 		return ResponseEntity.ok(response);
 	}

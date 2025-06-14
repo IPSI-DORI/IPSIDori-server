@@ -13,7 +13,7 @@ public record CurriculumSurveyResponse(
 	String question1,
 	String question2,
 	Platform platform,
-	LocalDateTime ceateAt
+	LocalDateTime createAt
 ) {
 	public static CurriculumSurveyResponse from(Curriculum curriculum) {
 		return new CurriculumSurveyResponse(

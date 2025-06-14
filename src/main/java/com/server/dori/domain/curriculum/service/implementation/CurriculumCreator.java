@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.repository.CurriculumRepository;
+import com.server.dori.domain.grade.service.implementation.GradeCreator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class CurriculumCreator {
 
 	private final CurriculumRepository curriculumRepository;
+	private final GradeCreator gradeCreator;
 
 	public Curriculum saveSurvey(CurriculumSurveyRequest request) {
 		Curriculum curriculum = Curriculum.builder()
@@ -25,8 +27,9 @@ public class CurriculumCreator {
 			.question1(request.question1())
 			.question2(request.question2())
 			.platform(request.platform())
-			.createdAt(LocalDateTime.now())
 			.build();
+
+		gradeCreator.createGrade(curriculum);
 
 		return curriculumRepository.save(curriculum);
 	}

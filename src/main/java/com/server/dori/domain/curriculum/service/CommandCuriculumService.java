@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CurriculumCommandService {
+public class CommandCuriculumService {
 
 	private final CurriculumCreator curriculumCreator;
 
