@@ -54,7 +54,7 @@ public class MemberInfo extends BaseEntity {
 
 	public void updateForSignup(String nickname, Grade grade, String currentUniversity, String currentMajor,
 		String targetUniversity, String targetMajor,
-		LearningStyle learningStyle, Integer learningStyleScore) {
+		LearningStyle learningStyle, int learningStyleScore) {
 		this.nickname = nickname;
 		this.grade = grade;
 		this.currentUniversity = currentUniversity;
@@ -72,9 +72,9 @@ public class MemberInfo extends BaseEntity {
 		this.targetMajor = targetMajor;
 	}
 
-	// TODO - 이미지 매핑
-	public String getProfileImageUrl() {
-		return null;
+	// TO-BE 학습 스타일 변경
+	public void updateLearningStyleScore(int newScore) {
+		this.learningStyleScore = newScore;
 	}
 
 	public boolean isMemberInfoCompleted() {
