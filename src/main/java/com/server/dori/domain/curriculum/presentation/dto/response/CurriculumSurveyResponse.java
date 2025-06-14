@@ -1,4 +1,4 @@
-package com.server.dori.domain.curriculum.controller.dto.response;
+package com.server.dori.domain.curriculum.presentation.dto.response;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.server.dori.domain.curriculum.controller.dto.request;
+package com.server.dori.domain.curriculum.presentation.dto.request;
 
 import com.server.dori.domain.curriculum.entity.type.Platform;
 

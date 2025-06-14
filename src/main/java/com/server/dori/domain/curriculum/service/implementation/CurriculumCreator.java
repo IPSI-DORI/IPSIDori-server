@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
-import com.server.dori.domain.curriculum.controller.dto.request.CurriculumSurveyRequest;
+import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.repository.CurriculumRepository;
 
