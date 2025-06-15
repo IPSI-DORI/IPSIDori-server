@@ -26,6 +26,7 @@ public class CommandMemberService {
 
 	public Member updateMemberInfo(Long memberId, MemberInfoUpdateDto requestDto) {
 		Member member = memberReader.getMember(memberId);
+		memberValidator.validateMemberCompleted(member);
 		return memberUpdater.updateInfo(member, requestDto);
 	}
 }
