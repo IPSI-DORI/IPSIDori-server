@@ -67,9 +67,6 @@ jobs:
             sudo docker stop ipsidori || true
             sudo docker rm ipsidori || true
 
-            # docker-compose로 인프라 서비스 실행 (네트워크 자동 생성)
-            sudo docker-compose up -d
-
             # 백엔드 컨테이너 실행
             sudo docker run -d \
               --name ipsidori \
