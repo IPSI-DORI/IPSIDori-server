@@ -48,17 +48,11 @@ public class MemberReader {
 	}
 
 	public String getCharacterImageUrl(MemberInfo memberInfo) {
-		if (memberInfo == null || !CharacterType.isValidScore(memberInfo.getLearningStyleScore())) {
-			return String.format("%s/default.png", s3BaseUrl);
-		}
 		CharacterType characterType = CharacterType.fromScore(memberInfo.getLearningStyleScore());
 		return characterType.getImageUrl(s3BaseUrl);
 	}
 
 	public CharacterInfo createCharacterInfo(MemberInfo memberInfo) {
-		if (memberInfo == null || !CharacterType.isValidScore(memberInfo.getLearningStyleScore())) {
-			return null;
-		}
 		CharacterType characterType = CharacterType.fromScore(memberInfo.getLearningStyleScore());
 		String imageUrl = getCharacterImageUrl(memberInfo);
 		return new CharacterInfo(
