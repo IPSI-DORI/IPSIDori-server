@@ -1,5 +1,7 @@
 package com.server.dori.domain.auth.presentation.controller;
 
+import java.io.IOException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -21,6 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +34,16 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 	private final QueryAuthService queryAuthService;
 
-	@Operation(summary = "카카오 소셜 로그인 (전체 플로우 처리)")
+	@Operation(summary = "카카오 로그인 시작", description = "카카오 OAuth2 로그인 페이지로 리다이렉트합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "302", description = "카카오 로그인 페이지로 리다이렉트")
+	})
+	@GetMapping("/oauth2/authorization/kakao")
+	public void kakaoLoginStart(HttpServletResponse response) throws IOException {
+		response.sendRedirect("/oauth2/authorization/kakao");
+	}
+
+	@Operation(summary = "카카오 소셜 로그인 콜백", description = "카카오 OAuth2 인증 완료 후 호출되는 콜백 엔드포인트입니다. JWT 토큰을 발급받습니다.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "로그인 성공, JWT 토큰 발급"),
 		@ApiResponse(responseCode = "404", description = "카카오 사용자 정보 없음")
