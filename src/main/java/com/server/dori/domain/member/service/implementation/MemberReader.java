@@ -42,9 +42,7 @@ public class MemberReader {
 	}
 
 	public String getNickname(Member member) {
-		return member.getMemberInfo() != null && member.getMemberInfo().getNickname() != null
-			? member.getMemberInfo().getNickname()
-			: member.getNickname();
+		return member.getMemberInfo().getNickname();
 	}
 
 	public String getCharacterImageUrl(MemberInfo memberInfo) {

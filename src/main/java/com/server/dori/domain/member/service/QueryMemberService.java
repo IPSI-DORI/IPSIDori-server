@@ -26,19 +26,21 @@ public class QueryMemberService {
 	}
 
 	public MemberInfoResponseDto createInfoResponse(Member member) {
-		String nickname = memberReader.getNickname(member);
 		MemberInfo memberInfo = member.getMemberInfo();
 		memberValidator.validateMemberInfo(memberInfo);
 		memberValidator.validateLearningStyleScore(memberInfo);
+
+		String nickname = memberReader.getNickname(member);
 		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
 		return new MemberInfoResponseDto(member.getId(), nickname, characterImageUrl);
 	}
 
 	public MemberInfoDetailResponseDto createInfoDetailResponse(Member member) {
-		String nickname = memberReader.getNickname(member);
 		MemberInfo memberInfo = member.getMemberInfo();
 		memberValidator.validateMemberInfo(memberInfo);
 		memberValidator.validateLearningStyleScore(memberInfo);
+
+		String nickname = memberReader.getNickname(member);
 		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
 
 		return new MemberInfoDetailResponseDto(
@@ -51,10 +53,11 @@ public class QueryMemberService {
 	}
 
 	public MemberSignupResponseDto createSignupResponse(Member member) {
-		String nickname = memberReader.getNickname(member);
 		MemberInfo memberInfo = member.getMemberInfo();
 		memberValidator.validateMemberInfo(memberInfo);
 		memberValidator.validateLearningStyleScore(memberInfo);
+
+		String nickname = memberReader.getNickname(member);
 		CharacterInfo characterInfo = memberReader.createCharacterInfo(memberInfo);
 
 		return new MemberSignupResponseDto(
