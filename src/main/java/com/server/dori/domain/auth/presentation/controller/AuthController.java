@@ -43,7 +43,7 @@ public class AuthController {
 		response.sendRedirect("/oauth2/authorization/kakao");
 	}
 
-	@Operation(summary = "카카오 소셜 로그인 (전체 플로우 처리)")
+	@Operation(summary = "카카오 소셜 로그인 콜백", description = "카카오 OAuth2 인증 완료 후 호출되는 콜백 엔드포인트입니다. JWT 토큰을 발급받습니다.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "로그인 성공, JWT 토큰 발급"),
 		@ApiResponse(responseCode = "404", description = "카카오 사용자 정보 없음")
