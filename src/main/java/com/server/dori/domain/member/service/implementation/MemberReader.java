@@ -60,7 +60,7 @@ public class MemberReader {
 			return null;
 		}
 		CharacterType characterType = CharacterType.fromScore(memberInfo.getLearningStyleScore());
-		String imageUrl = characterType.getImageUrl(s3BaseUrl);
+		String imageUrl = getCharacterImageUrl(memberInfo);
 		return new CharacterInfo(
 			characterType.getName(),
 			characterType.getCharacteristics(),
