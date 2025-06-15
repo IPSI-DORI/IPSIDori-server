@@ -72,11 +72,6 @@ public class MemberInfo extends BaseEntity {
 		this.targetMajor = targetMajor;
 	}
 
-	// TO-BE 학습 스타일 변경
-	public void updateLearningStyleScore(int newScore) {
-		this.learningStyleScore = newScore;
-	}
-
 	public boolean isMemberInfoCompleted() {
 		return grade != null && targetUniversity != null && !targetUniversity.isBlank()
 			&& targetMajor != null && !targetMajor.isBlank() && learningStyle != null;
