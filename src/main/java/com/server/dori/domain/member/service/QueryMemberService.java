@@ -27,27 +27,35 @@ public class QueryMemberService {
 
 	public MemberInfoResponseDto createInfoResponse(Member member) {
 		String nickname = memberReader.getNickname(member);
-		String characterImageUrl = memberReader.getCharacterImageUrl(member.getMemberInfo());
+		MemberInfo memberInfo = member.getMemberInfo();
+		memberValidator.validateMemberInfo(memberInfo);
+		memberValidator.validateLearningStyleScore(memberInfo);
+		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
 		return new MemberInfoResponseDto(member.getId(), nickname, characterImageUrl);
 	}
 
 	public MemberInfoDetailResponseDto createInfoDetailResponse(Member member) {
 		String nickname = memberReader.getNickname(member);
-		String characterImageUrl = memberReader.getCharacterImageUrl(member.getMemberInfo());
 		MemberInfo memberInfo = member.getMemberInfo();
+		memberValidator.validateMemberInfo(memberInfo);
+		memberValidator.validateLearningStyleScore(memberInfo);
+		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
 
 		return new MemberInfoDetailResponseDto(
 			member.getId(),
 			nickname,
-			memberInfo != null ? memberInfo.getGrade() : null,
-			memberInfo != null ? memberInfo.getTargetUniversity() : null,
-			memberInfo != null ? memberInfo.getTargetMajor() : null,
+			memberInfo.getGrade(),
+			memberInfo.getTargetUniversity(),
+			memberInfo.getTargetMajor(),
 			characterImageUrl);
 	}
 
 	public MemberSignupResponseDto createSignupResponse(Member member) {
 		String nickname = memberReader.getNickname(member);
-		CharacterInfo characterInfo = memberReader.createCharacterInfo(member.getMemberInfo());
+		MemberInfo memberInfo = member.getMemberInfo();
+		memberValidator.validateMemberInfo(memberInfo);
+		memberValidator.validateLearningStyleScore(memberInfo);
+		CharacterInfo characterInfo = memberReader.createCharacterInfo(memberInfo);
 
 		return new MemberSignupResponseDto(
 			member.getId(),
