@@ -13,7 +13,7 @@ import com.server.dori.domain.auth.exception.AuthNotFoundException;
 import com.server.dori.domain.auth.presentation.dto.request.TokenReissueRequest;
 import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
 import com.server.dori.domain.auth.service.QueryAuthService;
-import com.server.dori.global.response.CustomApiResponse;
+import com.server.dori.global.response.ApiResponseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,13 +36,13 @@ public class AuthController {
 		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "카카오 사용자 정보 없음")
 	})
 	@GetMapping("/oauth2/kakao")
-	public ResponseEntity<CustomApiResponse<TokenDto>> kakaoLoginCallback(
+	public ResponseEntity<ApiResponseDto<TokenDto>> kakaoLoginCallback(
 		@Parameter(hidden = true) @AuthenticationPrincipal OAuth2User oauth2User
 	) {
 		if (oauth2User == null) {
 			throw AuthNotFoundException.oauthUserNotFound();
 		}
-		return CustomApiResponse.ok(queryAuthService.oauth2Login(oauth2User));
+		return ApiResponseDto.ok(queryAuthService.oauth2Login(oauth2User));
 	}
 
 	@Operation(summary = "토큰 재발급")
@@ -52,9 +52,9 @@ public class AuthController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PostMapping("/reissue")
-	public ResponseEntity<CustomApiResponse<TokenDto>> reissue(
+	public ResponseEntity<ApiResponseDto<TokenDto>> reissue(
 		@Valid @RequestBody TokenReissueRequest requestDto
 	) {
-		return CustomApiResponse.ok(queryAuthService.reissue(requestDto.refreshToken()));
+		return ApiResponseDto.ok(queryAuthService.reissue(requestDto.refreshToken()));
 	}
 }

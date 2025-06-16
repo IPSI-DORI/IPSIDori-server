@@ -24,7 +24,7 @@ import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
 import com.server.dori.domain.auth.service.QueryAuthService;
 import com.server.dori.global.jwt.JwtFilter;
 import com.server.dori.global.oauth2.CustomOAuth2UserService;
-import com.server.dori.global.response.CustomApiResponse;
+import com.server.dori.global.response.ApiResponseDto;
 import com.server.dori.global.response.exception.ApiErrorResponse;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -85,7 +85,7 @@ public class WebSecurityConfig {
 					OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal();
 					TokenDto tokenDto = queryAuthService.oauth2Login(oauth2User);
 					response.setContentType("application/json;charset=UTF-8");
-					response.getWriter().write(objectMapper.writeValueAsString(CustomApiResponse.ok(tokenDto)));
+					response.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.ok(tokenDto)));
 				})
 
 				// 인증 실패
