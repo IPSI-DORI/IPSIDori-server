@@ -1,12 +1,12 @@
 package com.server.dori.domain.test.service;
 
-import com.server.dori.domain.test.presentation.dto.TestRequestDto;
-import com.server.dori.domain.test.presentation.dto.TestResponseDto;
+import com.server.dori.domain.test.presentation.dto.TestRequest;
+import com.server.dori.domain.test.presentation.dto.TestResponse;
 
 public interface TestService {
-	TestResponseDto createTest(TestRequestDto request);
+	TestResponse createTest(TestRequest request);
 
-	TestResponseDto getTest(Long id);
+	TestResponse getTest(Long id);
 
 	void throwCustomException();
 

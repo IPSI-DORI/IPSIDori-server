@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 
 import com.server.dori.domain.test.entity.Test;
 
-public record TestResponseDto(
+public record TestResponse(
 	Long id,
 	String message,
 	LocalDateTime createdAt
 ) {
 
-	public static TestResponseDto fromEntity(Test test) {
-		return new TestResponseDto(
+	public static TestResponse fromEntity(Test test) {
+		return new TestResponse(
 			test.getId(),
 			test.getMessage(),
 			test.getCreatedAt()

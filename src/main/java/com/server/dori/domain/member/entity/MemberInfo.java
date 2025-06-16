@@ -50,11 +50,11 @@ public class MemberInfo extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private LearningStyle learningStyle;
 
-	private Integer learningStyleScore;
+	private int learningStyleScore;
 
 	public void updateForSignup(String nickname, Grade grade, String currentUniversity, String currentMajor,
 		String targetUniversity, String targetMajor,
-		LearningStyle learningStyle, Integer learningStyleScore) {
+		LearningStyle learningStyle, int learningStyleScore) {
 		this.nickname = nickname;
 		this.grade = grade;
 		this.currentUniversity = currentUniversity;
@@ -70,11 +70,6 @@ public class MemberInfo extends BaseEntity {
 		this.grade = grade;
 		this.targetUniversity = targetUniversity;
 		this.targetMajor = targetMajor;
-	}
-
-	// TODO - 이미지 매핑
-	public String getProfileImageUrl() {
-		return null;
 	}
 
 	public boolean isMemberInfoCompleted() {

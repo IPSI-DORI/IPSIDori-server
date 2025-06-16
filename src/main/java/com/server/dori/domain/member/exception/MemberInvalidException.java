@@ -26,4 +26,9 @@ public class MemberInvalidException extends CustomException {
 	public static MemberInvalidException missingRetryStudentInfo() {
 		return new MemberInvalidException(HttpStatus.BAD_REQUEST, "MEMBER_400_4", "재수/반수생은 현재 대학교와 전공을 필수로 입력해야 합니다.");
 	}
+
+	public static MemberInvalidException invalidCharacterScore() {
+		return new MemberInvalidException(HttpStatus.BAD_REQUEST, "MEMBER_400_5",
+			"캐릭터 점수가 유효하지 않습니다. 4점에서 16점 사이의 값이어야 합니다.");
+	}
 }

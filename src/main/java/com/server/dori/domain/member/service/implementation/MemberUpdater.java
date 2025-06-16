@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
 import com.server.dori.domain.member.entity.sub.LearningStyle;
-import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdateDto;
-import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequestDto;
+import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdate;
+import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequest;
 import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class MemberUpdater {
 	private final MemberRepository memberRepository;
 
 	@Transactional
-	public Member updateInfo(Member member, MemberInfoUpdateDto requestDto) {
+	public Member updateInfo(Member member, MemberInfoUpdate requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
 		memberInfo.updateInfo(
@@ -32,7 +32,7 @@ public class MemberUpdater {
 	}
 
 	@Transactional
-	public Member updateMemberWithAdditionalInfo(Member member, MemberSignupRequestDto requestDto) {
+	public Member updateMemberWithAdditionalInfo(Member member, MemberSignupRequest requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
 		int learningStyleScore = calculateLearningStyleScore(
