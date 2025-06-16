@@ -12,8 +12,8 @@ COPY settings.gradle .
 RUN chmod +x ./gradlew
 RUN ./gradlew dependencies
 
-# 소스 복사 및 빌드
-COPY src src
+# 소스 복사 및 빌드 (서브모듈 포함) 📦
+COPY . .
 RUN ./gradlew bootJar --no-daemon
 
 # 2단계: 실행 환경 (슬림한 이미지)
@@ -21,6 +21,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar /app/app.jar
+COPY --from=builder /app/src/main/resources/config/ /app/config/
 
 # 실행
 ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
