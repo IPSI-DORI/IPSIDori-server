@@ -5,6 +5,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -88,16 +89,37 @@ public class JwtTokenProvider {
 				.parseClaimsJws(token)
 				.getBody();
 
-			Collection<? extends GrantedAuthority> authorities =
-				Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+			Collection<? extends GrantedAuthority> authorities;
+			// 액세스 토큰
+			if (claims.get(AUTHORITIES_KEY) != null) {
+				authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
 					.map(SimpleGrantedAuthority::new)
 					.collect(Collectors.toList());
+			} else { // 리프레시 토큰
+				authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+			}
 
 			String email = claims.getSubject();
 			Member member = memberReader.getMemberByEmail(email);
 			UserDetails principal = new CustomUserDetails(member);
 
 			return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+		} catch (ExpiredJwtException e) {
+			throw AuthUnauthorizedException.expiredToken();
+		} catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+			throw AuthUnauthorizedException.invalidToken();
+		}
+	}
+
+	public String getEmailFromToken(String token) {
+		try {
+			Claims claims = Jwts.parserBuilder()
+				.setSigningKey(key)
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
+
+			return claims.getSubject();
 		} catch (ExpiredJwtException e) {
 			throw AuthUnauthorizedException.expiredToken();
 		} catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
