@@ -72,6 +72,6 @@ jobs:
               --name ipsidori \
               --network ipsidori_default \
               -p 8080:8080 \
-              --env-file ../src/main/resources/config/.env \
+              --env-file .env \
               --restart always \
               ${{env.DOCKER_IMAGE_NAME}}:latest
