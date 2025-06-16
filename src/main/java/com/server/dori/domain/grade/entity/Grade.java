@@ -2,10 +2,16 @@ package com.server.dori.domain.grade.entity;
 
 import java.time.LocalDate;
 
+import com.server.dori.domain.curriculum.entity.Curriculum;
+import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +27,7 @@ public class Grade {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
+	private Long id;
 
 	private String subjects;
 
@@ -37,8 +43,12 @@ public class Grade {
 
 	private LocalDate createdAt;
 
+	@JoinColumn(name = "curriculum_id", nullable = false)
+	private Long curriculum;
+
 	@Builder
-	public Grade(String subjects, String elective, String exam, String score, String grade, String percent, LocalDate createdAt) {
+	public Grade(Long curriculum, String subjects, String elective, String exam, String score, String grade, String percent, LocalDate createdAt) {
+		this.curriculum = curriculum;
 		this.subjects = subjects;
 		this.elective = elective;
 		this.exam = exam;
@@ -46,5 +56,12 @@ public class Grade {
 		this.grade = grade;
 		this.percent = percent;
 		this.createdAt = LocalDate.now();
+	}
+
+	public void saveGrade(GradeRequest request) {
+		this.exam = request.exam();
+		this.score = request.score();
+		this.grade = request.grade();
+		this.percent = request.percent();
 	}
 }
