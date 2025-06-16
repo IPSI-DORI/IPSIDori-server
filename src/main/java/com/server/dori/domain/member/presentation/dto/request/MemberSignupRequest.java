@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Schema(description = "회원가입 요청 DTO (토큰에서 사용자 정보 자동 추출)")
-public record MemberSignupRequestDto(
+public record MemberSignupRequest(
 	@Schema(description = "닉네임", example = "홍길동")
 	@NotBlank String nickname,
 
