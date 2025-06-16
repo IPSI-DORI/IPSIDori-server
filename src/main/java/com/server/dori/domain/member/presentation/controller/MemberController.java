@@ -20,7 +20,7 @@ import com.server.dori.domain.member.presentation.dto.response.MemberInfoRespons
 import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponse;
 import com.server.dori.domain.member.service.CommandMemberService;
 import com.server.dori.domain.member.service.QueryMemberService;
-import com.server.dori.global.response.ApiResponseDto;
+import com.server.dori.global.response.CustomApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -54,7 +54,7 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponseDto<MemberSignupResponse>> signup(
+	public ResponseEntity<CustomApiResponse<MemberSignupResponse>> signup(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal UserDetails userDetails,
 		@Valid @RequestBody MemberSignupRequest requestDto
@@ -64,7 +64,7 @@ public class MemberController {
 		}
 
 		Member updatedMember = commandMemberService.signup(userDetails.getUsername(), requestDto);
-		return ApiResponseDto.ok(queryMemberService.createSignupResponse(updatedMember));
+		return CustomApiResponse.ok(queryMemberService.createSignupResponse(updatedMember));
 	}
 
 	@Operation(
@@ -79,7 +79,7 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/info")
-	public ResponseEntity<ApiResponseDto<MemberInfoResponse>> getMemberInfo(
+	public ResponseEntity<CustomApiResponse<MemberInfoResponse>> getMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
@@ -88,7 +88,7 @@ public class MemberController {
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
-		return ApiResponseDto.ok(queryMemberService.createInfoResponse(member));
+		return CustomApiResponse.ok(queryMemberService.createInfoResponse(member));
 	}
 
 	@Operation(
@@ -103,7 +103,7 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/info/detail")
-	public ResponseEntity<ApiResponseDto<MemberInfoDetailResponse>> getMemberInfoDetail(
+	public ResponseEntity<CustomApiResponse<MemberInfoDetailResponse>> getMemberInfoDetail(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
@@ -112,7 +112,7 @@ public class MemberController {
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
-		return ApiResponseDto.ok(queryMemberService.createInfoDetailResponse(member));
+		return CustomApiResponse.ok(queryMemberService.createInfoDetailResponse(member));
 	}
 
 	@Operation(
@@ -126,7 +126,7 @@ public class MemberController {
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PutMapping("/info")
-	public ResponseEntity<ApiResponseDto<MemberInfoDetailResponse>> updateMemberInfo(
+	public ResponseEntity<CustomApiResponse<MemberInfoDetailResponse>> updateMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails,
 		@Valid @RequestBody MemberInfoUpdate requestDto
@@ -139,6 +139,6 @@ public class MemberController {
 			userDetails.getMemberId(),
 			requestDto
 		);
-		return ApiResponseDto.ok(queryMemberService.createInfoDetailResponse(updatedMember));
+		return CustomApiResponse.ok(queryMemberService.createInfoDetailResponse(updatedMember));
 	}
 }
