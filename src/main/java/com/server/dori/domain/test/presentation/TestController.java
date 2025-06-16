@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.server.dori.domain.test.presentation.dto.TestRequest;
 import com.server.dori.domain.test.presentation.dto.TestResponse;
 import com.server.dori.domain.test.service.TestService;
-import com.server.dori.global.response.ApiResponse;
+import com.server.dori.global.response.CustomApiReponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +23,13 @@ public class TestController {
 	private final TestService testService;
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<TestResponse>> createTest(@Valid @RequestBody TestRequest request) {
-		return ApiResponse.created(testService.createTest(request));
+	public ResponseEntity<CustomApiReponse<TestResponse>> createTest(@Valid @RequestBody TestRequest request) {
+		return CustomApiReponse.created(testService.createTest(request));
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<TestResponse>> getTest(@PathVariable Long id) {
-		return ApiResponse.ok(testService.getTest(id));
+	public ResponseEntity<CustomApiReponse<TestResponse>> getTest(@PathVariable Long id) {
+		return CustomApiReponse.ok(testService.getTest(id));
 	}
 
 	@GetMapping("/exception/custom")
