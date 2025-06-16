@@ -1,4 +1,4 @@
-package com.server.dori.domain.curriculum;
+package com.server.dori.domain.curriculum.presentation;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
