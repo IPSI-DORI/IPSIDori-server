@@ -10,7 +10,6 @@ import com.server.dori.domain.member.entity.CustomUserDetails;
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
 import com.server.dori.domain.member.entity.sub.CharacterType;
-import com.server.dori.domain.member.exception.MemberNotFoundException;
 import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponseDto.CharacterInfo;
 import com.server.dori.domain.member.repository.MemberRepository;
 
@@ -26,19 +25,16 @@ public class MemberReader {
 	private String s3BaseUrl;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member member = memberRepository.findByEmail(username)
-			.orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
+		Member member = memberRepository.getByEmail(username);
 		return new CustomUserDetails(member);
 	}
 
 	public Member getMemberByEmail(String email) {
-		return memberRepository.findByEmail(email)
-			.orElseThrow(MemberNotFoundException::memberNotFoundException);
+		return memberRepository.getByEmail(email);
 	}
 
 	public Member getMember(Long memberId) {
-		return memberRepository.findById(memberId)
-			.orElseThrow(MemberNotFoundException::memberNotFoundException);
+		return memberRepository.getById(memberId);
 	}
 
 	public String getNickname(Member member) {
