@@ -2,7 +2,9 @@ package com.server.dori.domain.grade.presentation;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
@@ -19,8 +21,8 @@ public class GradeController {
 	private final CommandGradeService commandGradeService;
 
 	@PutMapping
-	public ResponseEntity<GradeResponse> saveGrade(GradeRequest request) {
-		GradeResponse response = commandGradeService.saveGrade(request);
+	public ResponseEntity<GradeResponse> saveGrade(@RequestBody GradeRequest request, @RequestParam(name = "gradeId") Long gradeId) {
+		GradeResponse response = commandGradeService.saveGrade(request, gradeId);
 		return ResponseEntity.ok(response);
 	}
 }

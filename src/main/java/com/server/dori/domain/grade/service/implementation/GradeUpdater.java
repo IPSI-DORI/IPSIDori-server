@@ -2,7 +2,6 @@ package com.server.dori.domain.grade.service.implementation;
 
 import org.springframework.stereotype.Service;
 
-import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
 import com.server.dori.domain.grade.repository.GradeRepository;
@@ -11,17 +10,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class GradeCreator {
+public class GradeUpdater {
 
 	private final GradeRepository gradeRepository;
 
-	public Grade createGrade(Curriculum curriculum) {
-		Grade grade = Grade.builder()
-			.curriculum(curriculum.getId())
-			.subjects(curriculum.getSubject())
-			.elective(curriculum.getElective())
-			.build();
-
-		return gradeRepository.save(grade);
+	public Grade saveGrade(GradeRequest request, Long gradeId) {
+		Grade grade = gradeRepository.getById(gradeId);
+		grade.saveGrade(request);
+		return grade;
 	}
 }
