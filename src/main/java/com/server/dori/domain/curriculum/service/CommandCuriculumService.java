@@ -18,7 +18,6 @@ public class CommandCuriculumService {
 	private final CurriculumCreator curriculumCreator;
 
 	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request) {
-		Curriculum curriculum = curriculumCreator.saveSurvey(request);
-		return CurriculumSurveyResponse.from(curriculum);
+		return curriculumCreator.saveSurvey(request);
 	}
 }

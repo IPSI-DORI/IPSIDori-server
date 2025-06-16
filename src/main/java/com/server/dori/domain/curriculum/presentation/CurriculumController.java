@@ -21,7 +21,6 @@ public class CurriculumController {
 	@PostMapping("/survey")
 	public ResponseEntity<CurriculumSurveyResponse> saveSurvey(@RequestBody CurriculumSurveyRequest request) {
 		CurriculumSurveyResponse response = commandCuriculumService.saveSurvey(request);
-
 		return ResponseEntity.ok(response);
 	}
 }

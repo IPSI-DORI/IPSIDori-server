@@ -13,9 +13,10 @@ public record CurriculumSurveyResponse(
 	String question1,
 	String question2,
 	Platform platform,
-	LocalDateTime createAt
+	LocalDateTime createAt,
+	Long gradeId
 ) {
-	public static CurriculumSurveyResponse from(Curriculum curriculum) {
+	public static CurriculumSurveyResponse of(Curriculum curriculum, Long gradeId) {
 		return new CurriculumSurveyResponse(
 			curriculum.getSubject(),
 			curriculum.getElective(),
@@ -24,7 +25,8 @@ public record CurriculumSurveyResponse(
 			curriculum.getQuestion1(),
 			curriculum.getQuestion2(),
 			curriculum.getPlatform(),
-			curriculum.getCreatedAt()
+			curriculum.getCreatedAt(),
+			gradeId
 		);
 	}
 }
