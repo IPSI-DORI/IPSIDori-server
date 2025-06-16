@@ -17,6 +17,7 @@ import com.server.dori.global.response.ApiResponseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,8 +33,8 @@ public class AuthController {
 
 	@Operation(summary = "카카오 소셜 로그인 (전체 플로우 처리)")
 	@ApiResponses({
-		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "로그인 성공, JWT 토큰 발급"),
-		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "카카오 사용자 정보 없음")
+		@ApiResponse(responseCode = "200", description = "로그인 성공, JWT 토큰 발급"),
+		@ApiResponse(responseCode = "404", description = "카카오 사용자 정보 없음")
 	})
 	@GetMapping("/oauth2/kakao")
 	public ResponseEntity<ApiResponseDto<TokenDto>> kakaoLoginCallback(
@@ -47,8 +48,8 @@ public class AuthController {
 
 	@Operation(summary = "토큰 재발급")
 	@ApiResponses({
-		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "토큰 재발급 성공"),
-		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "유효하지 않은 리프레시 토큰")
+		@ApiResponse(responseCode = "200", description = "토큰 재발급 성공"),
+		@ApiResponse(responseCode = "401", description = "유효하지 않은 리프레시 토큰")
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PostMapping("/reissue")
