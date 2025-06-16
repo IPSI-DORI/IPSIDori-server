@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
 import com.server.dori.domain.member.entity.Member;
+import com.server.dori.domain.member.service.implementation.MemberReader;
 import com.server.dori.global.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class TokenIssuer {
 
 	private final JwtTokenProvider jwtTokenProvider;
+	private final MemberReader memberReader;
 
 	public TokenDto issueToken(Member member) {
 		Collection<? extends GrantedAuthority> authorities = java.util.List.of(
@@ -30,8 +32,11 @@ public class TokenIssuer {
 	}
 
 	public TokenDto reissueToken(String refreshToken) {
-		Authentication authentication = jwtTokenProvider.getAuthentication(refreshToken);
-		return issueTokenPair(authentication);
+		String email = jwtTokenProvider.getEmailFromToken(refreshToken);
+
+		Member member = memberReader.getMemberByEmail(email);
+
+		return issueToken(member);
 	}
 
 	private TokenDto issueTokenPair(Authentication authentication) {
