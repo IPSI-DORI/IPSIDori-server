@@ -10,7 +10,7 @@ import com.server.dori.domain.member.entity.CustomUserDetails;
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
 import com.server.dori.domain.member.entity.sub.CharacterType;
-import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponseDto.CharacterInfo;
+import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponse.CharacterInfo;
 import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;

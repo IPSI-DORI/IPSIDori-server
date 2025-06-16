@@ -24,8 +24,8 @@ import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
 import com.server.dori.domain.auth.service.QueryAuthService;
 import com.server.dori.global.jwt.JwtFilter;
 import com.server.dori.global.oauth2.CustomOAuth2UserService;
-import com.server.dori.global.response.ApiResponseDto;
-import com.server.dori.global.response.exception.ApiErrorResponseDto;
+import com.server.dori.global.response.ApiResponse;
+import com.server.dori.global.response.exception.ApiErrorResponse;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +85,7 @@ public class WebSecurityConfig {
 					OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal();
 					TokenDto tokenDto = queryAuthService.oauth2Login(oauth2User);
 					response.setContentType("application/json;charset=UTF-8");
-					response.getWriter().write(objectMapper.writeValueAsString(ApiResponseDto.ok(tokenDto)));
+					response.getWriter().write(objectMapper.writeValueAsString(ApiResponse.ok(tokenDto)));
 				})
 
 				// 인증 실패
@@ -93,7 +93,7 @@ public class WebSecurityConfig {
 					response.setContentType("application/json;charset=UTF-8");
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					AuthNotFoundException authException = AuthNotFoundException.oauthUserNotFound();
-					ApiErrorResponseDto errorResponse = new ApiErrorResponseDto(
+					ApiErrorResponse errorResponse = new ApiErrorResponse(
 						false,
 						authException.getCode(),
 						authException.getMessage(),
@@ -135,7 +135,7 @@ public class WebSecurityConfig {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			AuthUnauthorizedException authException2 = AuthUnauthorizedException.invalidToken();
-			ApiErrorResponseDto errorResponse = new ApiErrorResponseDto(
+			ApiErrorResponse errorResponse = new ApiErrorResponse(
 				false,
 				authException2.getCode(),
 				authException2.getMessage(),
@@ -151,7 +151,7 @@ public class WebSecurityConfig {
 			response.setContentType("application/json;charset=UTF-8");
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			AuthUnauthorizedException authException = AuthUnauthorizedException.invalidToken();
-			ApiErrorResponseDto errorResponse = new ApiErrorResponseDto(
+			ApiErrorResponse errorResponse = new ApiErrorResponse(
 				false,
 				authException.getCode(),
 				authException.getMessage(),

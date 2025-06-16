@@ -13,18 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.server.dori.domain.member.entity.CustomUserDetails;
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.exception.MemberNotFoundException;
-import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdateDto;
-import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequestDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberInfoDetailResponseDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberInfoResponseDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponseDto;
+import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdate;
+import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequest;
+import com.server.dori.domain.member.presentation.dto.response.MemberInfoDetailResponse;
+import com.server.dori.domain.member.presentation.dto.response.MemberInfoResponse;
+import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponse;
 import com.server.dori.domain.member.service.CommandMemberService;
 import com.server.dori.domain.member.service.QueryMemberService;
-import com.server.dori.global.response.ApiResponseDto;
+import com.server.dori.global.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,24 +46,24 @@ public class MemberController {
 		description = "OAuth2 로그인 후 발급받은 토큰으로 추가 정보를 입력하여 회원가입을 완료합니다."
 	)
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "회원가입 성공"),
-		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
-		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
-		@ApiResponse(responseCode = "409", description = "이미 가입된 회원")
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "회원가입 성공"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "잘못된 요청"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "409", description = "이미 가입된 회원")
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponseDto<MemberSignupResponseDto>> signup(
+	public ResponseEntity<ApiResponse<MemberSignupResponse>> signup(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal UserDetails userDetails,
-		@Valid @RequestBody MemberSignupRequestDto requestDto
+		@Valid @RequestBody MemberSignupRequest requestDto
 	) {
 		if (userDetails == null) {
 			throw MemberNotFoundException.memberNotFoundException();
 		}
 
 		Member updatedMember = commandMemberService.signup(userDetails.getUsername(), requestDto);
-		return ApiResponseDto.ok(queryMemberService.createSignupResponse(updatedMember));
+		return ApiResponse.ok(queryMemberService.createSignupResponse(updatedMember));
 	}
 
 	@Operation(
@@ -72,14 +71,14 @@ public class MemberController {
 		description = "회원 기본 정보를 조회합니다. (닉네임, 프로필 이미지 URL)"
 	)
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "조회 성공"),
-		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
-		@ApiResponse(responseCode = "404", description = "회원을 찾을 수 없음"),
-		@ApiResponse(responseCode = "400", description = "회원가입이 완료되지 않음")
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "조회 성공"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "회원을 찾을 수 없음"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "회원가입이 완료되지 않음")
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/info")
-	public ResponseEntity<ApiResponseDto<MemberInfoResponseDto>> getMemberInfo(
+	public ResponseEntity<ApiResponse<MemberInfoResponse>> getMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
@@ -88,7 +87,7 @@ public class MemberController {
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
-		return ApiResponseDto.ok(queryMemberService.createInfoResponse(member));
+		return ApiResponse.ok(queryMemberService.createInfoResponse(member));
 	}
 
 	@Operation(
@@ -96,14 +95,14 @@ public class MemberController {
 		description = "회원 상세 정보를 조회합니다. (닉네임, 학년, 희망 대학교, 희망 전공, 프로필 이미지 URL)"
 	)
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "조회 성공"),
-		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
-		@ApiResponse(responseCode = "404", description = "회원을 찾을 수 없음"),
-		@ApiResponse(responseCode = "400", description = "회원가입이 완료되지 않음")
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "조회 성공"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "회원을 찾을 수 없음"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "회원가입이 완료되지 않음")
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/info/detail")
-	public ResponseEntity<ApiResponseDto<MemberInfoDetailResponseDto>> getMemberInfoDetail(
+	public ResponseEntity<ApiResponse<MemberInfoDetailResponse>> getMemberInfoDetail(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
@@ -112,7 +111,7 @@ public class MemberController {
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
-		return ApiResponseDto.ok(queryMemberService.createInfoDetailResponse(member));
+		return ApiResponse.ok(queryMemberService.createInfoDetailResponse(member));
 	}
 
 	@Operation(
@@ -120,16 +119,16 @@ public class MemberController {
 		description = "회원 정보를 수정합니다. (닉네임, 학년, 희망 대학교, 희망 전공)"
 	)
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "수정 성공"),
-		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
-		@ApiResponse(responseCode = "404", description = "회원을 찾을 수 없음")
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "수정 성공"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "회원을 찾을 수 없음")
 	})
 	@SecurityRequirement(name = "bearerAuth")
 	@PutMapping("/info")
-	public ResponseEntity<ApiResponseDto<MemberInfoDetailResponseDto>> updateMemberInfo(
+	public ResponseEntity<ApiResponse<MemberInfoDetailResponse>> updateMemberInfo(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal CustomUserDetails userDetails,
-		@Valid @RequestBody MemberInfoUpdateDto requestDto
+		@Valid @RequestBody MemberInfoUpdate requestDto
 	) {
 		if (userDetails == null) {
 			throw MemberNotFoundException.memberNotFoundException();
@@ -139,6 +138,6 @@ public class MemberController {
 			userDetails.getMemberId(),
 			requestDto
 		);
-		return ApiResponseDto.ok(queryMemberService.createInfoDetailResponse(updatedMember));
+		return ApiResponse.ok(queryMemberService.createInfoDetailResponse(updatedMember));
 	}
 }

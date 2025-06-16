@@ -4,10 +4,10 @@ import org.springframework.stereotype.Service;
 
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
-import com.server.dori.domain.member.presentation.dto.response.MemberInfoDetailResponseDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberInfoResponseDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponseDto;
-import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponseDto.CharacterInfo;
+import com.server.dori.domain.member.presentation.dto.response.MemberInfoDetailResponse;
+import com.server.dori.domain.member.presentation.dto.response.MemberInfoResponse;
+import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponse;
+import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponse.CharacterInfo;
 import com.server.dori.domain.member.service.implementation.MemberReader;
 import com.server.dori.domain.member.service.implementation.MemberValidator;
 
@@ -25,17 +25,17 @@ public class QueryMemberService {
 		return member;
 	}
 
-	public MemberInfoResponseDto createInfoResponse(Member member) {
+	public MemberInfoResponse createInfoResponse(Member member) {
 		MemberInfo memberInfo = member.getMemberInfo();
 		memberValidator.validateMemberInfo(memberInfo);
 		memberValidator.validateLearningStyleScore(memberInfo);
 
 		String nickname = memberReader.getNickname(member);
 		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
-		return new MemberInfoResponseDto(member.getId(), nickname, characterImageUrl);
+		return new MemberInfoResponse(member.getId(), nickname, characterImageUrl);
 	}
 
-	public MemberInfoDetailResponseDto createInfoDetailResponse(Member member) {
+	public MemberInfoDetailResponse createInfoDetailResponse(Member member) {
 		MemberInfo memberInfo = member.getMemberInfo();
 		memberValidator.validateMemberInfo(memberInfo);
 		memberValidator.validateLearningStyleScore(memberInfo);
@@ -43,7 +43,7 @@ public class QueryMemberService {
 		String nickname = memberReader.getNickname(member);
 		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
 
-		return new MemberInfoDetailResponseDto(
+		return new MemberInfoDetailResponse(
 			member.getId(),
 			nickname,
 			memberInfo.getGrade(),
@@ -52,7 +52,7 @@ public class QueryMemberService {
 			characterImageUrl);
 	}
 
-	public MemberSignupResponseDto createSignupResponse(Member member) {
+	public MemberSignupResponse createSignupResponse(Member member) {
 		MemberInfo memberInfo = member.getMemberInfo();
 		memberValidator.validateMemberInfo(memberInfo);
 		memberValidator.validateLearningStyleScore(memberInfo);
@@ -60,7 +60,7 @@ public class QueryMemberService {
 		String nickname = memberReader.getNickname(member);
 		CharacterInfo characterInfo = memberReader.createCharacterInfo(memberInfo);
 
-		return new MemberSignupResponseDto(
+		return new MemberSignupResponse(
 			member.getId(),
 			member.getEmail(),
 			nickname,

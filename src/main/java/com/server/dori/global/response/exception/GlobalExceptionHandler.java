@@ -20,11 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(CustomException.class)
-	public ResponseEntity<ApiErrorResponseDto> handleCustomException(CustomException customException) {
+	public ResponseEntity<ApiErrorResponse> handleCustomException(CustomException customException) {
 		log.error("커스텀 에러: {}, 에러 코드 : {}", customException.getMessage(), customException.getCode());
 		return ResponseEntity
 			.status(customException.getHttpStatus())
-			.body(new ApiErrorResponseDto(
+			.body(new ApiErrorResponse(
 				false,
 				customException.getCode(),
 				customException.getMessage(),
@@ -33,13 +33,13 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ResponseEntity<ApiErrorResponseDto> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+	public ResponseEntity<ApiErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
 		Throwable rootCause = e.getRootCause();
 		if (rootCause instanceof CustomException customException) {
 			log.error("잘못된 Enum 값 입력 (JsonCreator) 또는 기타 역직렬화 오류: {}", customException.getMessage());
 			return ResponseEntity
 				.status(customException.getHttpStatus())
-				.body(new ApiErrorResponseDto(
+				.body(new ApiErrorResponse(
 					false,
 					customException.getCode(),
 					customException.getMessage(),
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
 		log.error("잘못된 요청 형식 : {}", e.getMessage());
 		return ResponseEntity
 			.status(HttpStatus.BAD_REQUEST)
-			.body(new ApiErrorResponseDto(
+			.body(new ApiErrorResponse(
 				false,
 				"COMMON_400_2",
 				"잘못된 형식의 요청입니다.",
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ApiErrorResponseDto> handleValidationException(
+	public ResponseEntity<ApiErrorResponse> handleValidationException(
 		MethodArgumentNotValidException methodArgumentNotValidException) {
 
 		Map<String, String> errors = new HashMap<>();
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
 
 		return ResponseEntity
 			.status(HttpStatus.BAD_REQUEST)
-			.body(new ApiErrorResponseDto(
+			.body(new ApiErrorResponse(
 				false,
 				"COMMON_400",
 				"잘못된 요청",
@@ -77,12 +77,12 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<ApiErrorResponseDto> handleAccessDeniedException(
+	public ResponseEntity<ApiErrorResponse> handleAccessDeniedException(
 		AccessDeniedException accessDeniedException) {
 		log.error("접근 권한 오류 : {}", accessDeniedException.getMessage());
 		return ResponseEntity
 			.status(HttpStatus.FORBIDDEN)
-			.body(new ApiErrorResponseDto(
+			.body(new ApiErrorResponse(
 				false,
 				"COMMON_403",
 				"금지된 요청",
@@ -91,11 +91,11 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler({NoHandlerFoundException.class, HttpRequestMethodNotSupportedException.class})
-	public ResponseEntity<ApiErrorResponseDto> handleNoHandlerFoundException(Exception exception) {
+	public ResponseEntity<ApiErrorResponse> handleNoHandlerFoundException(Exception exception) {
 		log.error("존재하지 않는 API : {}", exception.getMessage());
 		return ResponseEntity
 			.status(HttpStatus.NOT_FOUND)
-			.body(new ApiErrorResponseDto(
+			.body(new ApiErrorResponse(
 				false,
 				"COMMON_404",
 				"찾을 수 없음",
@@ -104,11 +104,11 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ApiErrorResponseDto> handleAllException(Exception exception) {
+	public ResponseEntity<ApiErrorResponse> handleAllException(Exception exception) {
 		log.error("알지 못한 에러: {}", exception.getMessage());
 		return ResponseEntity
 			.status(HttpStatus.INTERNAL_SERVER_ERROR)
-			.body(new ApiErrorResponseDto(
+			.body(new ApiErrorResponse(
 				false,
 				"COMMON_500",
 				"서버 에러, 관리자에게 문의하세요",

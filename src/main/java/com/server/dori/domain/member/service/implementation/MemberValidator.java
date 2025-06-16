@@ -7,14 +7,14 @@ import com.server.dori.domain.member.entity.MemberInfo;
 import com.server.dori.domain.member.entity.sub.CharacterType;
 import com.server.dori.domain.member.exception.MemberConflictException;
 import com.server.dori.domain.member.exception.MemberInvalidException;
-import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequestDto;
+import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequest;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class MemberValidator {
-	public void validateSignupRequest(Member member, MemberSignupRequestDto requestDto) {
+	public void validateSignupRequest(Member member, MemberSignupRequest requestDto) {
 		// 이미 가입이 완료된 회원인지 검증
 		if (member.isMemberInfoCompleted()) {
 			throw MemberConflictException.signupAlreadyCompleted();

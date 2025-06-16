@@ -3,7 +3,7 @@ package com.server.dori.domain.member.presentation.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "마이페이지 심플 정보 DTO")
-public record MemberInfoResponseDto(
+public record MemberInfoResponse(
 	@Schema(description = "회원 ID", example = "1")
 	Long memberId,
 
