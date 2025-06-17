@@ -10,6 +10,7 @@ import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSur
 import com.server.dori.domain.curriculum.repository.CurriculumRepository;
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.service.implementation.GradeCreator;
+import com.server.dori.domain.member.entity.Member;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +21,10 @@ public class CurriculumCreator {
 	private final CurriculumRepository curriculumRepository;
 	private final GradeCreator gradeCreator;
 
-	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request) {
+	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request, Long memberId) {
+
 		Curriculum curriculum = Curriculum.builder()
+			.creator(memberId)
 			.subject(request.subject())
 			.elective(request.elective())
 			.studyTime(request.studyTime())

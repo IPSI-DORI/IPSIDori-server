@@ -6,6 +6,7 @@ import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.entity.type.Platform;
 
 public record CurriculumSurveyResponse(
+	Long creator,
 	String subject,
 	String elective,
 	String studyTime,
@@ -18,6 +19,7 @@ public record CurriculumSurveyResponse(
 ) {
 	public static CurriculumSurveyResponse of(Curriculum curriculum, Long gradeId) {
 		return new CurriculumSurveyResponse(
+			curriculum.getCreator(),
 			curriculum.getSubject(),
 			curriculum.getElective(),
 			curriculum.getStudyTime(),

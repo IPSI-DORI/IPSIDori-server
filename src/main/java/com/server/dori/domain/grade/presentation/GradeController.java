@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
 import com.server.dori.domain.grade.presentation.dto.response.GradeResponse;
 import com.server.dori.domain.grade.service.CommandGradeService;
+import com.server.dori.global.response.CustomApiResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,8 +22,8 @@ public class GradeController {
 	private final CommandGradeService commandGradeService;
 
 	@PutMapping
-	public ResponseEntity<GradeResponse> saveGrade(@RequestBody GradeRequest request, @RequestParam(name = "gradeId") Long gradeId) {
+	public ResponseEntity<CustomApiResponse<GradeResponse>> saveGrade(@RequestBody GradeRequest request, @RequestParam(name = "gradeId") Long gradeId) {
 		GradeResponse response = commandGradeService.saveGrade(request, gradeId);
-		return ResponseEntity.ok(response);
+		return CustomApiResponse.ok(response);
 	}
 }

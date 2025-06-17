@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -45,8 +46,12 @@ public class Curriculum {
 	@Enumerated(EnumType.STRING)
 	private Platform platform;
 
+	@JoinColumn(name = "member_id", nullable = false)
+	private Long creator;
+
 	@Builder
-	public Curriculum(String subject, String elective, String studyTime, String studyDays, String question1, String question2, LocalDateTime createdAt, Platform platform) {
+	public Curriculum(Long creator, String subject, String elective, String studyTime, String studyDays, String question1, String question2, LocalDateTime createdAt, Platform platform) {
+		this.creator = creator;
 		this.subject = subject;
 		this.elective = elective;
 		this.studyTime = studyTime;
