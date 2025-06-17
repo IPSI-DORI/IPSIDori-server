@@ -1,6 +1,5 @@
 package com.server.dori.domain.curriculum.service.implementation;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -29,10 +28,8 @@ public class CurriculumCreator {
 	private final GradeRepository gradeRepository;
 	private final RestClient restClient;
 
-	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request, Long memberId) {
-
+	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request) {
 		Curriculum curriculum = Curriculum.builder()
-			.creator(memberId)
 			.subject(request.subject())
 			.elective(request.elective())
 			.studyTime(request.studyTime())
