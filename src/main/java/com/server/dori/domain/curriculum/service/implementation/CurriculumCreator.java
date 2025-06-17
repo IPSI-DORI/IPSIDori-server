@@ -1,7 +1,5 @@
 package com.server.dori.domain.curriculum.service.implementation;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Service;
 
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
@@ -10,7 +8,6 @@ import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSur
 import com.server.dori.domain.curriculum.repository.CurriculumRepository;
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.service.implementation.GradeCreator;
-import com.server.dori.domain.member.entity.Member;
 
 import lombok.RequiredArgsConstructor;
 
