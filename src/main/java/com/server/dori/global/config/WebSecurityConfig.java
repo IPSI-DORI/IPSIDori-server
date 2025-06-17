@@ -60,6 +60,7 @@ public class WebSecurityConfig {
 				// 인증
 				.requestMatchers(
 					"/oauth2/authorization/**",
+					"/api/v1/auth/oauth2/authorization/**",
 					"/api/v1/auth/oauth2/kakao",
 					"/api/v1/auth/signup",
 					"/api/v1/auth/reissue"
