@@ -11,6 +11,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.core5.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.hc.core5.util.TimeValue;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -18,6 +19,9 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class AIConfig {
+
+	@Value("${fastapi.url}")
+	private String fastapiUrl;
 
 	private static final int MAX_TOTAL_CONNECTIONS = 200;
 	private static final int MAX_CONNECTIONS_PER_ROUTE = 20;
@@ -32,6 +36,7 @@ public class AIConfig {
 	@Bean
 	public RestClient restClient(HttpClient httpClient) {
 		return RestClient.builder()
+			.baseUrl(fastapiUrl)
 			.requestFactory(new HttpComponentsClientHttpRequestFactory(httpClient))
 			.build();
 	}
