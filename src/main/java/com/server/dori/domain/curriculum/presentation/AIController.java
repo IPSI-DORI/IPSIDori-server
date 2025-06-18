@@ -42,12 +42,10 @@ public class AIController {
 	@GetMapping("/curriculum")
 	public ResponseEntity<String> getAICurriculum(@RequestParam(name = "query") String query) {
 		try {
-			String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
-
 			String response = restClient.get()
 				.uri(uriBuilder -> uriBuilder
 					.path("/curriculum")
-					.queryParam("user_question", encodedQuery)
+					.queryParam("user_question", query)
 					.build())
 				.retrieve()
 				.body(String.class);
@@ -58,20 +56,4 @@ public class AIController {
 			throw new ApiCallException(e.getMessage());
 		}
 	}
-
-	// @PostMapping("/curriculum")
-	// public ResponseEntity<String> getAICurriculum(@RequestBody Map<String, Object> requestBody) {
-	// 	try {
-	// 		String response = restClient.post()
-	// 			.uri("/curriculum")
-	// 			.body(requestBody)
-	// 			.retrieve()
-	// 			.body(String.class);
-	//
-	// 		System.out.println(response);
-	// 		return ResponseEntity.ok(response);
-	// 	} catch (Exception e) {
-	// 		throw new ApiCallException(e.getMessage());
-	// 	}
-	// }
 }
