@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
 import com.server.dori.domain.curriculum.service.CommandCuriculumService;
@@ -32,11 +33,11 @@ public class CurriculumController {
 	}
 
 	@GetMapping()
-	public ResponseEntity<CustomApiResponse<String>> getCurriculum(
+	public ResponseEntity<CustomApiResponse<AICurriculumResponse>> getCurriculum(
 		@AuthenticationPrincipal CustomUserDetails userDetails,
 		@RequestParam(name = "curriculumId") Long curriculumId
 	) {
-		String response = commandCuriculumService.getCurriculum(userDetails.getMemberId(), curriculumId);
+		AICurriculumResponse response = commandCuriculumService.getCurriculum(userDetails.getMemberId(), curriculumId);
 		return CustomApiResponse.ok(response);
 	}
 }
