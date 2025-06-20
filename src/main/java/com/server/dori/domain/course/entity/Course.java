@@ -13,25 +13,33 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "`curriculums`")
+@Table(name = "`courses`")
 public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String courseId;
+	private Long courseId;
 
 	private String title;
+
 	private String description;
+
 	private String subject;
+
 	private String teacher;
+
 	private String grade;
+
 	private String platform;
+
 	private boolean isPaid;
+
 	private int price;
+
 	private String recommend;
 
 	@Builder
-	public Course(String courseId, String title, String description, String subject, String teacher,
+	public Course(Long courseId, String title, String description, String subject, String teacher,
 		String grade, String platform, boolean isPaid, int price, String recommend) {
 		this.courseId = courseId;
 		this.title = title;
