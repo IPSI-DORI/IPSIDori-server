@@ -2,16 +2,13 @@ package com.server.dori.domain.grade.entity;
 
 import java.time.LocalDate;
 
-import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
