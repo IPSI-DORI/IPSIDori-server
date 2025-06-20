@@ -1,4 +1,4 @@
-package com.server.dori.domain.curriculum.presentation.api;
+package com.server.dori.domain.curriculum.presentation;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "커리큘럼", description = "커리큘럼 관련 API")
 @RequestMapping("/api/v1/curriculum")
-public interface CurriculumApi {
+public interface CurriculumApiController {
 
 	@Operation(summary = "커리큘럼 설문 저장", description = "커리큘럼을 생성하기 위한 설문조사를 저장합니다.")
 	@ApiResponses({

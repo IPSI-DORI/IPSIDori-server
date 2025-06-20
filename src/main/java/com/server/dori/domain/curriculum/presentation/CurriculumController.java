@@ -2,14 +2,10 @@ package com.server.dori.domain.curriculum.presentation;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.server.dori.domain.curriculum.presentation.api.CurriculumApi;
 import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
@@ -21,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class CurriculumController implements CurriculumApi {
+public class CurriculumController implements CurriculumApiController {
 	private final CommandCuriculumService commandCuriculumService;
 
 	@Override
