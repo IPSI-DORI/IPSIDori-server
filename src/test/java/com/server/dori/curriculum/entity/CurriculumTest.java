@@ -12,17 +12,17 @@ import com.server.dori.domain.curriculum.entity.type.Platform;
 
 class CurriculumTest {
 
-	@DisplayName("Curriculum 빌더로 객체를 생성하면 값이 정상적으로 할당된다.")
+	@DisplayName("커리큘럼 설문이 정상적으로 저장된다.")
 	@Test
 	void testCurriculumBuilder() {
 		// given
 		Long creator = 1L;
 		String subject = "국어";
-		String elective = "심화";
-		String studyTime = "오후 2시";
+		String elective = "언어와 매체";
+		String studyTime = "2~3시간";
 		String studyDays = "월, 수, 금";
-		String question1 = "어떤 부분이 어려우셨나요?";
-		String question2 = "어떤 방식의 수업을 원하시나요?";
+		String question1 = "문제에서 요구하는 게 뭔지 잘 모르겠어요.";
+		String question2 = "심화까지 깊이있게 배우기";
 		Platform platform = Platform.EBSi;
 
 		// when
