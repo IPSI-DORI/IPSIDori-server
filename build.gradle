@@ -18,8 +18,10 @@ jacoco {
     toolVersion = "0.8.8"
 }
 
-def hasTestTargets = file('src/main/java/com/server/service').exists() ||
-        file('src/main/java/com/server/entity').exists()
+def hasTestTargets = fileTree("src/main/java/com/server/dori/domain").matching {
+    include "**/service/**"
+    include "**/entity/**"
+}.files.size() > 0
 
 test {
     useJUnitPlatform()
