@@ -18,7 +18,7 @@ public class CommandCuriculumService {
 	private final CurriculumCreator curriculumCreator;
 
 	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request, Long memberId) {
-		return curriculumCreator.saveSurvey(request, memberId);
+		return curriculumCreator.saveSurvey(request);
 	}
 
 	public AICurriculumResponse getCurriculum(Long memberId, Long curriculumId) {
