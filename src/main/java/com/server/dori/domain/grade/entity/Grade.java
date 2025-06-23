@@ -32,11 +32,11 @@ public class Grade {
 
 	private String exam;
 
-	private String score;
+	private int score;
 
-	private String grade;
+	private int grade;
 
-	private String percent;
+	private double percent;
 
 	private LocalDate createdAt;
 
@@ -44,7 +44,7 @@ public class Grade {
 	private Long curriculum;
 
 	@Builder
-	public Grade(Long curriculum, String subjects, String elective, String exam, String score, String grade, String percent, LocalDate createdAt) {
+	public Grade(Long curriculum, String subjects, String elective, String exam, int score, int grade, double percent, LocalDate createdAt) {
 		this.curriculum = curriculum;
 		this.subjects = subjects;
 		this.elective = elective;

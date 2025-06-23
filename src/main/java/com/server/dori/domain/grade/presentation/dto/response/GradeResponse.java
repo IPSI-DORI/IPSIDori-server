@@ -10,9 +10,9 @@ public record GradeResponse(
 	String subjects,
 	String elective,
 	String exam,
-	String score,
-	String grade,
-	String percent,
+	int score,
+	int grade,
+	double percent,
 	LocalDate createdAt
 ) {
 	public static GradeResponse from(Grade grade) {
