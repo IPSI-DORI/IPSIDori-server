@@ -16,7 +16,7 @@ public record AICurriculumRequest(MemberInfo memberInfo, Curriculum curriculum, 
 			"나는 지금부터 강의 추천을 받을거야. 괄호 안의 정보 바탕으로 강의 추천 해줘. " +
 				"과목: [%s, %s], " +
 				"학년: %s[%s, %s], " +
-				"현재 나의 성적: %s[%s점, %s등급, %s퍼센트], " +
+				"현재 나의 성적: %s[%d점, %d등급, %.1f퍼센트], " +
 				"하루 공부 시간: %s, " +
 				"공부요일: [%s], " +
 				"나의 문제점: %s, " +
@@ -28,9 +28,9 @@ public record AICurriculumRequest(MemberInfo memberInfo, Curriculum curriculum, 
 			member.getTargetUniversity() != null ? member.getTargetUniversity() : NotFoundException(),
 			member.getTargetMajor() != null ? member.getTargetMajor() : NotFoundException(),
 			grade.getExam() != null ? grade.getExam() : NotFoundException(),
-			grade.getScore() != null ? grade.getScore() : NotFoundException(),
-			grade.getGrade() != null ? grade.getGrade() : NotFoundException(),
-			grade.getPercent() != null ? grade.getPercent() : NotFoundException(),
+			grade.getScore(),
+			grade.getGrade(),
+			grade.getPercent(),
 			curriculum.getStudyTime() != null ? curriculum.getStudyTime() : NotFoundException(),
 			curriculum.getStudyDays() != null ? curriculum.getStudyDays() : NotFoundException(),
 			curriculum.getQuestion1() != null ? curriculum.getQuestion1() : NotFoundException(),
