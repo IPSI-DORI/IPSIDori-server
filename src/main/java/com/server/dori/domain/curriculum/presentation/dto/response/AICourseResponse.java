@@ -8,7 +8,6 @@ public record AICourseResponse(
 	String teacher,
 	String grade,
 	String platform,
-	boolean isPaid,
 	int price,
 	String recommend
 ) {}

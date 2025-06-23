@@ -20,7 +20,6 @@ class CourseTest {
 		String teacher = "홍길동";
 		String grade = "고1";
 		String platform = "EBSi";
-		boolean isPaid = false;
 		int price = 0;
 		String recommend = "문학에 약한 학생에게 추천";
 
@@ -33,7 +32,6 @@ class CourseTest {
 			.teacher(teacher)
 			.grade(grade)
 			.platform(platform)
-			.isPaid(isPaid)
 			.price(price)
 			.recommend(recommend)
 			.build();
@@ -46,7 +44,6 @@ class CourseTest {
 		assertThat(course.getTeacher()).isEqualTo(teacher);
 		assertThat(course.getGrade()).isEqualTo(grade);
 		assertThat(course.getPlatform()).isEqualTo(platform);
-		assertThat(course.isPaid()).isEqualTo(isPaid);
 		assertThat(course.getPrice()).isEqualTo(price);
 		assertThat(course.getRecommend()).isEqualTo(recommend);
 	}

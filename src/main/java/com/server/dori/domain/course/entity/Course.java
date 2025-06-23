@@ -32,15 +32,13 @@ public class Course {
 
 	private String platform;
 
-	private boolean isPaid;
-
 	private int price;
 
 	private String recommend;
 
 	@Builder
 	public Course(Long courseId, String title, String description, String subject, String teacher,
-		String grade, String platform, boolean isPaid, int price, String recommend) {
+		String grade, String platform, int price, String recommend) {
 		this.courseId = courseId;
 		this.title = title;
 		this.description = description;
@@ -48,7 +46,6 @@ public class Course {
 		this.teacher = teacher;
 		this.grade = grade;
 		this.platform = platform;
-		this.isPaid = isPaid;
 		this.price = price;
 		this.recommend = recommend;
 	}
