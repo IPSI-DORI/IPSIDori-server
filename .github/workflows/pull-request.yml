@@ -38,8 +38,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build and Test
-        run: ./gradlew clean build test jacocoTestReport -Dspring.profiles.active=test
+      - name: Build and Test with Gradle
+        run: ./gradlew clean build test jacocoTestReport
 
       - name: Comment if Test Fails
         uses: mikepenz/action-junit-report@v3

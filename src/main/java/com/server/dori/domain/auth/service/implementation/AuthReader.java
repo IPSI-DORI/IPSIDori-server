@@ -20,7 +20,6 @@ public class AuthReader {
 
 	@Transactional(readOnly = true)
 	public Member findMemberByOAuth2User(OAuth2User oauth2User) {
-		String socialId = oauth2User.getAttribute("id").toString();
-		return memberRepository.getBySocialTypeAndSocialId(SocialType.KAKAO, socialId);
+		return memberRepository.getBySocialType(SocialType.KAKAO);
 	}
 }
