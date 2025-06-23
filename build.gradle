@@ -19,7 +19,6 @@ jacoco {
 }
 
 def hasTestTargets = fileTree("src/main/java/com/server/dori/domain").matching {
-    include "**/service/**"
     include "**/entity/**"
 }.files.size() > 0
 
@@ -84,7 +83,7 @@ jacocoTestReport {
         classDirectories.setFrom(
                 files(
                         classDirectories.files.collect {
-                            fileTree(dir: it, includes: ['**/service/**', '**/entity/**'])
+                            fileTree(dir: it, includes: ['**/entity/**'])
                         }
                 )
         )
