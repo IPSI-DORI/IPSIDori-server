@@ -5,7 +5,7 @@ import org.springframework.web.client.RestClient;
 
 import com.server.dori.domain.curriculum.exception.ApiCallException;
 import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumRequest;
-import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumResponse;
+import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;

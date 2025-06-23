@@ -1,4 +1,4 @@
-package com.server.dori.domain.curriculum.presentation.dto.request;
+package com.server.dori.domain.curriculum.presentation.dto.response;
 
 import java.util.List;
 

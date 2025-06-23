@@ -3,7 +3,7 @@ package com.server.dori.domain.curriculum.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumResponse;
+import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
 import com.server.dori.domain.curriculum.service.implementation.CurriculumCreator;
