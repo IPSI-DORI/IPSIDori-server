@@ -32,7 +32,7 @@ public class CurriculumController implements CurriculumApiController {
 		@AuthenticationPrincipal CustomUserDetails userDetails,
 		@RequestParam(name = "curriculumId") Long curriculumId
 	) {
-		AICurriculumResponse response = commandCuriculumService.getCurriculum(userDetails.getMemberId(), curriculumId);
+		AICurriculumResponse response = commandCuriculumService.createCurriculum(userDetails.getMemberId(), curriculumId);
 		return CustomApiResponse.ok(response);
 	}
 }

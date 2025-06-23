@@ -45,7 +45,7 @@ public class CurriculumCreator {
 		return CurriculumSurveyResponse.of(savedCurriculum, grade.getId());
 	}
 
-	public AICurriculumResponse getCurriculum(Long memberId, Long curriculumId) {
+	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId) {
 		MemberInfo memberInfo = memberRepository.getById(memberId).getMemberInfo();
 		Curriculum curriculum = curriculumRepository.getById(curriculumId);
 		Grade grade = gradeRepository.getById(curriculumId);
