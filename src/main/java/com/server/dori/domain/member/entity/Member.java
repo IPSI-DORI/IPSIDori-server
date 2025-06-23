@@ -32,9 +32,6 @@ public class Member extends BaseEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(nullable = false)
-	private String nickname;
-
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
@@ -43,18 +40,14 @@ public class Member extends BaseEntity {
 	@Column(nullable = false)
 	private SocialType socialType;
 
-	private String socialId;
-
 	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private MemberInfo memberInfo;
 
 	@Builder
-	public Member(String email, String nickname, Role role, SocialType socialType, String socialId) {
+	public Member(String email, Role role, SocialType socialType) {
 		this.email = email;
-		this.nickname = nickname;
 		this.role = role;
 		this.socialType = socialType;
-		this.socialId = socialId;
 	}
 
 	public void initializeMemberInfo() {

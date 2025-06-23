@@ -51,10 +51,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 	private Member getUser(OAuth2Attributes attributes, String registrationId) {
 		SocialType socialType = getSocialType(registrationId);
-		String socialId = attributes.oAuth2UserInfo().getId();
 
-		return memberRepository.findOptionalBySocialTypeAndSocialId(socialType, socialId)
-			.orElseGet(() -> createTemporaryMember(attributes, socialType, socialId));
+		return memberRepository.findOptionalBySocialType(socialType)
+			.orElseGet(() -> createTemporaryMember(attributes, socialType));
 	}
 
 	private SocialType getSocialType(String registrationId) {
@@ -64,13 +63,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		return SocialType.NONE;
 	}
 
-	private Member createTemporaryMember(OAuth2Attributes attributes, SocialType socialType, String socialId) {
+	private Member createTemporaryMember(OAuth2Attributes attributes, SocialType socialType) {
 		// 임시 회원 생성 (추가 정보 없음)
 		Member member = Member.builder()
 			.email(attributes.oAuth2UserInfo().getEmail())
-			.nickname(attributes.oAuth2UserInfo().getNickname())
 			.socialType(socialType)
-			.socialId(socialId)
 			.role(Role.USER)
 			.build();
 

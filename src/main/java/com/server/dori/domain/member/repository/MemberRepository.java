@@ -12,15 +12,15 @@ import com.server.dori.domain.member.exception.MemberNotFoundException;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	Optional<Member> findByEmail(String email);
 
-	Optional<Member> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
+	Optional<Member> findBySocialType(SocialType socialType);
 
 	default Member getByEmail(String email) {
 		return findByEmail(email)
 			.orElseThrow(MemberNotFoundException::memberNotFoundException);
 	}
 
-	default Member getBySocialTypeAndSocialId(SocialType socialType, String socialId) {
-		return findBySocialTypeAndSocialId(socialType, socialId)
+	default Member getBySocialType(SocialType socialType) {
+		return findBySocialType(socialType)
 			.orElseThrow(AuthNotFoundException::oauthUserNotFound);
 	}
 
@@ -29,7 +29,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 			.orElseThrow(MemberNotFoundException::memberNotFoundException);
 	}
 
-	default Optional<Member> findOptionalBySocialTypeAndSocialId(SocialType socialType, String socialId) {
-		return findBySocialTypeAndSocialId(socialType, socialId);
+	default Optional<Member> findOptionalBySocialType(SocialType socialType) {
+		return findBySocialType(socialType);
 	}
 }
