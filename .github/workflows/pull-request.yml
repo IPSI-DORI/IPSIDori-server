@@ -21,6 +21,25 @@ jobs:
           token: ${{ secrets.CONFIG_SUBMODULE_TOKEN }}
           submodules: recursive
 
+      - name: Debugging CI Environment
+        run: |
+          echo "========================================="
+          echo "1. Verifying Git Status"
+          echo "========================================="
+          git status
+          git branch -v
+          echo " "
+          echo "========================================="
+          echo "2. Verifying Submodule Status"
+          echo "========================================="
+          git submodule status --recursive
+          echo " "
+          echo "========================================="
+          echo "3. Listing All Files Recursively"
+          echo "========================================="
+          ls -R
+          echo "========================================="
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
