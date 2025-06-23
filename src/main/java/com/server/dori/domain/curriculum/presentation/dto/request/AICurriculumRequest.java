@@ -33,8 +33,8 @@ public record AICurriculumRequest(MemberInfo memberInfo, Curriculum curriculum, 
 			grade.getPercent(),
 			curriculum.getStudyTime() != null ? curriculum.getStudyTime() : NotFoundException(),
 			curriculum.getStudyDays() != null ? curriculum.getStudyDays() : NotFoundException(),
-			curriculum.getQuestion1() != null ? curriculum.getQuestion1() : NotFoundException(),
-			curriculum.getQuestion2() != null ? curriculum.getQuestion2() : NotFoundException(),
+			curriculum.getWeakProblemQuestion() != null ? curriculum.getWeakProblemQuestion() : NotFoundException(),
+			curriculum.getLearningGoalQuestion() != null ? curriculum.getLearningGoalQuestion() : NotFoundException(),
 			curriculum.getPlatform() != null ? curriculum.getPlatform().name() : NotFoundException()
 		);
 	}

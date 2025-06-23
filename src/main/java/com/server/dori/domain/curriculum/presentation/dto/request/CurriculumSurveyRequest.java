@@ -7,8 +7,8 @@ public record CurriculumSurveyRequest(
 	String elective,
 	String studyTime,
 	String studyDays,
-	String question1,
-	String question2,
+	String weakProblemQuestion,
+	String learningGoalQuestion,
 	Platform platform
 ) {
 }

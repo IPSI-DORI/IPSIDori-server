@@ -37,9 +37,9 @@ public class Curriculum {
 
 	private String studyDays;
 
-	private String question1;
+	private String weakProblemQuestion;
 
-	private String question2;
+	private String learningGoalQuestion;
 
 	private LocalDateTime createdAt;
 
@@ -50,14 +50,14 @@ public class Curriculum {
 	private Long creator;
 
 	@Builder
-	public Curriculum(Long creator, String subject, String elective, String studyTime, String studyDays, String question1, String question2, LocalDateTime createdAt, Platform platform) {
+	public Curriculum(Long creator, String subject, String elective, String studyTime, String studyDays, String weakProblemQuestion, String learningGoalQuestion, LocalDateTime createdAt, Platform platform) {
 		this.creator = creator;
 		this.subject = subject;
 		this.elective = elective;
 		this.studyTime = studyTime;
 		this.studyDays = studyDays;
-		this.question1 = question1;
-		this.question2 = question2;
+		this.weakProblemQuestion = weakProblemQuestion;
+		this.learningGoalQuestion = learningGoalQuestion;
 		this.createdAt = LocalDateTime.now();
 		this.platform = platform;
 	}

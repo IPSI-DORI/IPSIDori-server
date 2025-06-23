@@ -20,9 +20,9 @@ class GradeTest {
 		String subjects = "국어";
 		String elective = "언어와 매체";
 		String exam = "6월 평가원 모의고사";
-		String score = "95";
-		String grade = "1등급";
-		String percent = "90";
+		int score = 95;
+		int grade = 1;
+		double percent = 90.2;
 		LocalDate createdAt = LocalDate.now();
 
 		// when
@@ -57,13 +57,13 @@ class GradeTest {
 			.subjects("국어")
 			.elective("언어와 매체")
 			.exam("6월 평가원 모의고사")
-			.score("95")
-			.grade("1등급")
-			.percent("90")
+			.score(95)
+			.grade(1)
+			.percent(90.2)
 			.createdAt(LocalDate.now())
 			.build();
 
-		GradeRequest request = new GradeRequest(1L, "6월 평가원 모의고사", "95", "90", "1등급");
+		GradeRequest request = new GradeRequest(1L, "6월 평가원 모의고사", 95, 1, 90.2);
 
 		// when
 		gradeEntity.saveGrade(request);

@@ -11,8 +11,8 @@ public record CurriculumSurveyResponse(
 	String elective,
 	String studyTime,
 	String studyDays,
-	String question1,
-	String question2,
+	String weakProblemQuestion,
+	String learningGoalQuestion,
 	Platform platform,
 	LocalDateTime createAt,
 	Long gradeId
@@ -24,8 +24,8 @@ public record CurriculumSurveyResponse(
 			curriculum.getElective(),
 			curriculum.getStudyTime(),
 			curriculum.getStudyDays(),
-			curriculum.getQuestion1(),
-			curriculum.getQuestion2(),
+			curriculum.getWeakProblemQuestion(),
+			curriculum.getLearningGoalQuestion(),
 			curriculum.getPlatform(),
 			curriculum.getCreatedAt(),
 			gradeId

@@ -21,8 +21,8 @@ class CurriculumTest {
 		String elective = "언어와 매체";
 		String studyTime = "2~3시간";
 		String studyDays = "월, 수, 금";
-		String question1 = "문제에서 요구하는 게 뭔지 잘 모르겠어요.";
-		String question2 = "심화까지 깊이있게 배우기";
+		String weakProblemQuestion = "문제에서 요구하는 게 뭔지 잘 모르겠어요.";
+		String learningGoalQuestion = "심화까지 깊이있게 배우기";
 		Platform platform = Platform.EBSi;
 
 		// when
@@ -32,8 +32,8 @@ class CurriculumTest {
 			.elective(elective)
 			.studyTime(studyTime)
 			.studyDays(studyDays)
-			.question1(question1)
-			.question2(question2)
+			.weakProblemQuestion(weakProblemQuestion)
+			.learningGoalQuestion(learningGoalQuestion)
 			.createdAt(LocalDateTime.now())
 			.platform(platform)
 			.build();
@@ -44,8 +44,8 @@ class CurriculumTest {
 		assertThat(curriculum.getElective()).isEqualTo(elective);
 		assertThat(curriculum.getStudyTime()).isEqualTo(studyTime);
 		assertThat(curriculum.getStudyDays()).isEqualTo(studyDays);
-		assertThat(curriculum.getQuestion1()).isEqualTo(question1);
-		assertThat(curriculum.getQuestion2()).isEqualTo(question2);
+		assertThat(curriculum.getWeakProblemQuestion()).isEqualTo(weakProblemQuestion);
+		assertThat(curriculum.getLearningGoalQuestion()).isEqualTo(learningGoalQuestion);
 		assertThat(curriculum.getPlatform()).isEqualTo(platform);
 		assertThat(curriculum.getCreatedAt()).isNotNull();
 	}

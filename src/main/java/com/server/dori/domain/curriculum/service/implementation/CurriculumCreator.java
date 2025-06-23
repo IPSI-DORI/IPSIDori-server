@@ -34,8 +34,8 @@ public class CurriculumCreator {
 			.elective(request.elective())
 			.studyTime(request.studyTime())
 			.studyDays(request.studyDays())
-			.question1(request.question1())
-			.question2(request.question2())
+			.weakProblemQuestion(request.weakProblemQuestion())
+			.learningGoalQuestion(request.learningGoalQuestion())
 			.platform(request.platform())
 			.build();
 
