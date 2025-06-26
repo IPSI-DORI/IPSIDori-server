@@ -62,6 +62,7 @@ public interface GradeApiController {
 	@PutMapping
 	ResponseEntity<CustomApiResponse<GradeResponse>> updateGrade(
 		@RequestBody GradeRequest request,
-		@RequestParam(name = "gradeId") Long gradeId
+		@RequestParam(name = "gradeId") Long gradeId,
+		@AuthenticationPrincipal CustomUserDetails userDetails
 	);
 }

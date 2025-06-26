@@ -40,6 +40,9 @@ public class Grade {
 
 	private LocalDate createdAt;
 
+	@JoinColumn(name = "member_id", nullable = false)
+	private Long creator;
+
 	@JoinColumn(name = "curriculum_id", nullable = false)
 	private Long curriculum;
 
@@ -69,5 +72,9 @@ public class Grade {
 		this.score = request.score();
 		this.grade = request.grade();
 		this.percent = request.percent();
+	}
+
+	public boolean isCreator(Long userId) {
+		return this.creator.equals(userId);
 	}
 }

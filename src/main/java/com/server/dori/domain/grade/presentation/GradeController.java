@@ -39,9 +39,10 @@ public class GradeController implements GradeApiController {
 	@Override
 	public ResponseEntity<CustomApiResponse<GradeResponse>> updateGrade(
 		@RequestBody GradeRequest request,
-		Long gradeId
+		Long gradeId,
+		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
-		GradeResponse response = commandGradeService.updateGrade(request, gradeId);
+		GradeResponse response = commandGradeService.updateGrade(request, gradeId, userDetails.getMemberId());
 		return CustomApiResponse.ok(response);
 	}
 }
