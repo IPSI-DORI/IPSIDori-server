@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 @Schema(description = "성적 입력 요청 DTO")
-public record GradeRequest(
+public record GradeWithCurriculumRequest(
 
 	@Schema(description = "커리큘럼과 연결된 성적 ID", example = "1")
 	@NotNull Long gradeId,

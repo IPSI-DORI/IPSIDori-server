@@ -2,7 +2,7 @@ package com.server.dori.domain.grade.entity;
 
 import java.time.LocalDate;
 
-import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
+import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,7 +54,7 @@ public class Grade {
 		this.createdAt = LocalDate.now();
 	}
 
-	public void saveGrade(GradeRequest request) {
+	public void saveGrade(GradeWithCurriculumRequest request) {
 		this.exam = request.exam();
 		this.score = request.score();
 		this.grade = request.grade();

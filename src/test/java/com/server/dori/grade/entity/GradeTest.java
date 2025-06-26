@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.server.dori.domain.grade.entity.Grade;
-import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
+import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
 
 class GradeTest {
 
@@ -63,7 +63,7 @@ class GradeTest {
 			.createdAt(LocalDate.now())
 			.build();
 
-		GradeRequest request = new GradeRequest(1L, "6월 평가원 모의고사", 95, 1, 90.2);
+		GradeWithCurriculumRequest request = new GradeWithCurriculumRequest(1L, "6월 평가원 모의고사", 95, 1, 90.2);
 
 		// when
 		gradeEntity.saveGrade(request);

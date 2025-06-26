@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
+import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
 import com.server.dori.domain.grade.presentation.dto.response.GradeResponse;
 import com.server.dori.global.response.CustomApiResponse;
 
@@ -31,7 +31,7 @@ public interface GradeApiController {
 	})
 	@PutMapping
 	ResponseEntity<CustomApiResponse<GradeResponse>> saveGrade(
-		@RequestBody GradeRequest request,
+		@RequestBody GradeWithCurriculumRequest request,
 		@Parameter(description = "수정할 Grade의 Id", example = "1") @RequestParam(name = "gradeId") Long gradeId
 	);
 }
