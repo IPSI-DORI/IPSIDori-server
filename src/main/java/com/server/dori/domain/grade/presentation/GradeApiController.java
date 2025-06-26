@@ -33,7 +33,7 @@ public interface GradeApiController {
 		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
 		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음")
 	})
-	@PutMapping
+	@PutMapping("curriculum")
 	ResponseEntity<CustomApiResponse<GradeResponse>> saveGrade(
 		@RequestBody GradeWithCurriculumRequest request,
 		@Parameter(description = "수정할 Grade의 Id", example = "1") @RequestParam(name = "gradeId") Long gradeId
