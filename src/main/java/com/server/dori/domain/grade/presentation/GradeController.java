@@ -35,4 +35,13 @@ public class GradeController implements GradeApiController {
 		GradeResponse response = commandGradeService.createGrade(request, userDetails.getMemberId());
 		return CustomApiResponse.ok(response);
 	}
+
+	@Override
+	public ResponseEntity<CustomApiResponse<GradeResponse>> updateGrade(
+		@RequestBody GradeRequest request,
+		Long gradeId
+	) {
+		GradeResponse response = commandGradeService.updateGrade(request, gradeId);
+		return CustomApiResponse.ok(response);
+	}
 }

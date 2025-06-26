@@ -29,4 +29,9 @@ public class CommandGradeService {
 		Grade grade = gradeCreator.createGrade(request, memberId);
 		return GradeResponse.from(grade);
 	}
+
+	public GradeResponse updateGrade(GradeRequest request, Long gradeId) {
+		Grade grade = gradeUpdater.updateGrade(request, gradeId);
+		return GradeResponse.from(grade);
+	}
 }

@@ -51,4 +51,17 @@ public interface GradeApiController {
 		@RequestBody GradeRequest request,
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	);
+
+	@Operation(summary = "성적 수정", description = "성적을 수정합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "성적 수정 성공",
+			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
+		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음")
+	})
+	@PutMapping
+	ResponseEntity<CustomApiResponse<GradeResponse>> updateGrade(
+		@RequestBody GradeRequest request,
+		@RequestParam(name = "gradeId") Long gradeId
+	);
 }
