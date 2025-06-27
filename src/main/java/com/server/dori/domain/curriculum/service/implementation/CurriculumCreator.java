@@ -40,7 +40,7 @@ public class CurriculumCreator {
 			.build();
 
 		Curriculum savedCurriculum = curriculumRepository.save(curriculum);
-		Grade grade = gradeCreator.createGrade(savedCurriculum);
+		Grade grade = gradeCreator.createGradeWithCurriculum(savedCurriculum);
 
 		return CurriculumSurveyResponse.of(savedCurriculum, grade.getId());
 	}

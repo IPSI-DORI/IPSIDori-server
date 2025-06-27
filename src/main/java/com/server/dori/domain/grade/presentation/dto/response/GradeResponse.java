@@ -1,6 +1,8 @@
 package com.server.dori.domain.grade.presentation.dto.response;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.server.dori.domain.grade.entity.Grade;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -44,5 +46,11 @@ public record GradeResponse(
 			grade.getPercent(),
 			grade.getCreatedAt()
 		);
+	}
+
+	public static List<GradeResponse> from(List<Grade> grades) {
+		return grades.stream()
+			.map(GradeResponse::from)
+			.collect(Collectors.toList());
 	}
 }

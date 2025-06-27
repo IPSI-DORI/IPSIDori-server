@@ -15,11 +15,24 @@ public class GradeCreator {
 
 	private final GradeRepository gradeRepository;
 
-	public Grade createGrade(Curriculum curriculum) {
+	public Grade createGradeWithCurriculum(Curriculum curriculum) {
 		Grade grade = Grade.builder()
 			.curriculum(curriculum.getId())
 			.subjects(curriculum.getSubject())
 			.elective(curriculum.getElective())
+			.build();
+
+		return gradeRepository.save(grade);
+	}
+
+	public Grade createGrade(GradeRequest request, Long memberId) {
+		Grade grade = Grade.builder()
+			.subjects(request.subjects())
+			.elective(request.elective())
+			.exam(request.exam())
+			.score(request.score())
+			.percent(request.percent())
+			.grade(request.grade())
 			.build();
 
 		return gradeRepository.save(grade);
