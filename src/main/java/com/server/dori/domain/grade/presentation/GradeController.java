@@ -68,4 +68,13 @@ public class GradeController implements GradeApiController {
 		List<GradeResponse> response = queryGradeService.getAllGrades(userDetails.getMemberId());
 		return CustomApiResponse.ok(response);
 	}
+
+	@Override
+	public ResponseEntity<CustomApiResponse> deleteGrade(
+		@RequestParam(name = "gradeId") Long gradeId,
+		@AuthenticationPrincipal CustomUserDetails userDetails
+	){
+		commandGradeService.deleteGrade(gradeId, userDetails.getMemberId());
+		return ResponseEntity.noContent().build();
+	}
 }

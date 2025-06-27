@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -91,6 +92,19 @@ public interface GradeApiController {
 	})
 	@GetMapping("/all")
 	ResponseEntity<CustomApiResponse<List<GradeResponse>>> readAllGrades(
+		@AuthenticationPrincipal CustomUserDetails userDetails
+	);
+
+	@Operation(summary = "성적 전체 조회", description = "학생의 저장된 성적을 조회합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "성적 조회 성공",
+			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
+		@ApiResponse(responseCode = "404", description = "학생의 성적 정보를 찾을 수 없음"),
+	})
+	@DeleteMapping("/all")
+	ResponseEntity<CustomApiResponse> deleteGrade(
+		@RequestParam(name = "gradeId") Long gradeId,
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	);
 }

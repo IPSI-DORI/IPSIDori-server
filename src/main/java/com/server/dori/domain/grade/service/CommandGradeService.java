@@ -9,6 +9,7 @@ import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculum
 import com.server.dori.domain.grade.presentation.dto.response.GradeResponse;
 import com.server.dori.domain.grade.repository.GradeRepository;
 import com.server.dori.domain.grade.service.implementation.GradeCreator;
+import com.server.dori.domain.grade.service.implementation.GradeDeleter;
 import com.server.dori.domain.grade.service.implementation.GradeReader;
 import com.server.dori.domain.grade.service.implementation.GradeUpdater;
 import com.server.dori.domain.grade.service.implementation.GradeValidator;
@@ -24,6 +25,7 @@ public class CommandGradeService {
 	private final GradeCreator gradeCreator;
 	private final GradeReader gradeReader;
 	private final GradeValidator gradeValidator;
+	private final GradeDeleter gradeDeleter;
 
 	public GradeResponse saveGrade(GradeWithCurriculumRequest request, Long gradeId) {
 		Grade grade = gradeReader.read(gradeId);
@@ -41,5 +43,11 @@ public class CommandGradeService {
 		gradeValidator.checkGradeAuthor(grade, memberId);
 		Grade updatedGrade = gradeUpdater.updateGrade(grade, request);
 		return GradeResponse.from(updatedGrade);
+	}
+
+	public void deleteGrade(Long gradeId, Long memberId) {
+		Grade grade = gradeReader.read(gradeId);
+		gradeValidator.checkGradeAuthor(grade, memberId);
+		gradeDeleter.delete(gradeId);
 	}
 }
