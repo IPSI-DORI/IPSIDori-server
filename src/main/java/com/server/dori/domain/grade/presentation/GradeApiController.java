@@ -1,7 +1,10 @@
 package com.server.dori.domain.grade.presentation;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,6 +66,31 @@ public interface GradeApiController {
 	ResponseEntity<CustomApiResponse<GradeResponse>> updateGrade(
 		@RequestBody GradeRequest request,
 		@RequestParam(name = "gradeId") Long gradeId,
+		@AuthenticationPrincipal CustomUserDetails userDetails
+	);
+
+	@Operation(summary = "성적 상세 조회", description = "성적을 상세 조회합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "성적 조회 성공",
+			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
+		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음")
+	})
+	@GetMapping
+	ResponseEntity<CustomApiResponse<GradeResponse>> readGrade(
+		@RequestParam(name = "gradeId") Long gradeId,
+		@AuthenticationPrincipal CustomUserDetails userDetails
+	);
+
+	@Operation(summary = "성적 전체 조회", description = "학생의 저장된 성적을 조회합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "성적 조회 성공",
+			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
+		@ApiResponse(responseCode = "404", description = "학생의 성적 정보를 찾을 수 없음"),
+	})
+	@GetMapping("/all")
+	ResponseEntity<CustomApiResponse<List<GradeResponse>>> readAllGrades(
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	);
 }
