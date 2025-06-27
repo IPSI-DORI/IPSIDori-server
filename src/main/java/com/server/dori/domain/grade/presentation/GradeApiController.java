@@ -61,7 +61,8 @@ public interface GradeApiController {
 		@ApiResponse(responseCode = "200", description = "성적 수정 성공",
 			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
 		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
-		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음")
+		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음"),
+		@ApiResponse(responseCode = "403", description = "성적 생성자가 아님")
 	})
 	@PutMapping
 	ResponseEntity<CustomApiResponse<GradeResponse>> updateGrade(
@@ -75,7 +76,8 @@ public interface GradeApiController {
 		@ApiResponse(responseCode = "200", description = "성적 조회 성공",
 			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
 		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
-		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음")
+		@ApiResponse(responseCode = "404", description = "해당 Id에 해당하는 성적 정보를 찾을 수 없음"),
+		@ApiResponse(responseCode = "403", description = "성적 생성자가 아님")
 	})
 	@GetMapping
 	ResponseEntity<CustomApiResponse<GradeResponse>> readGrade(
@@ -88,19 +90,20 @@ public interface GradeApiController {
 		@ApiResponse(responseCode = "200", description = "성적 조회 성공",
 			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
 		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
-		@ApiResponse(responseCode = "404", description = "학생의 성적 정보를 찾을 수 없음"),
+		@ApiResponse(responseCode = "404", description = "학생의 성적 정보를 찾을 수 없음")
 	})
 	@GetMapping("/all")
 	ResponseEntity<CustomApiResponse<List<GradeResponse>>> readAllGrades(
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	);
 
-	@Operation(summary = "성적 전체 조회", description = "학생의 저장된 성적을 조회합니다.")
+	@Operation(summary = "성적 삭제", description = "학생의 성적을 삭제합니다.")
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "성적 조회 성공",
+		@ApiResponse(responseCode = "200", description = "성적 삭제 성공",
 			content = @Content(schema = @Schema(implementation = GradeResponse.class))),
 		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
 		@ApiResponse(responseCode = "404", description = "학생의 성적 정보를 찾을 수 없음"),
+		@ApiResponse(responseCode = "403", description = "성적 생성자가 아님")
 	})
 	@DeleteMapping("/all")
 	ResponseEntity<CustomApiResponse> deleteGrade(
