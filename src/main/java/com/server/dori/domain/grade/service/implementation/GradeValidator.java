@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.exception.GradeNotAuthorException;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class GradeValidator {
 	public void checkGradeAuthor(Grade grade, Long memberId) {
 		if (!grade.isCreator(memberId)) {
