@@ -3,6 +3,7 @@ package com.server.dori.domain.grade.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.presentation.dto.response.GradeResponse;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class QueryGradeService {
 
 	private final GradeReader gradeReader;
