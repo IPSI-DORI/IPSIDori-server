@@ -47,12 +47,9 @@ public class Grade {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member creator;
 
-	@JoinColumn(name = "curriculum_id", nullable = false)
-	private Long curriculum;
-
 	@Builder
-	public Grade(Long curriculum, String subjects, String elective, String exam, int score, int grade, double percent, LocalDate createdAt) {
-		this.curriculum = curriculum;
+	public Grade(Member creator, String subjects, String elective, String exam, int score, int grade, double percent, LocalDate createdAt) {
+		this.creator = creator;
 		this.subjects = subjects;
 		this.elective = elective;
 		this.exam = exam;
