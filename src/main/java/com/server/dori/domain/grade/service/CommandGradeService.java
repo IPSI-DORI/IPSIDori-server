@@ -5,9 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
-import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
 import com.server.dori.domain.grade.presentation.dto.response.GradeResponse;
-import com.server.dori.domain.grade.repository.GradeRepository;
 import com.server.dori.domain.grade.service.implementation.GradeCreator;
 import com.server.dori.domain.grade.service.implementation.GradeDeleter;
 import com.server.dori.domain.grade.service.implementation.GradeReader;
@@ -26,12 +24,6 @@ public class CommandGradeService {
 	private final GradeReader gradeReader;
 	private final GradeValidator gradeValidator;
 	private final GradeDeleter gradeDeleter;
-
-	public GradeResponse saveGrade(GradeWithCurriculumRequest request, Long gradeId) {
-		Grade grade = gradeReader.read(gradeId);
-		Grade updatedGrade = gradeUpdater.saveGrade(grade, request);
-		return GradeResponse.from(updatedGrade);
-	}
 
 	public GradeResponse createGrade(GradeRequest request, Long memberId) {
 		Grade grade = gradeCreator.createGrade(request, memberId);

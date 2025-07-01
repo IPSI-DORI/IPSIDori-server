@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
-import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
 import com.server.dori.domain.grade.presentation.dto.response.GradeResponse;
 import com.server.dori.domain.grade.service.CommandGradeService;
 import com.server.dori.domain.grade.service.QueryGradeService;
@@ -24,13 +23,6 @@ public class GradeController implements GradeApiController {
 
 	private final CommandGradeService commandGradeService;
 	private final QueryGradeService queryGradeService;
-
-	@Override
-	public ResponseEntity<CustomApiResponse<GradeResponse>> saveGrade(GradeWithCurriculumRequest request,
-		Long gradeId) {
-		GradeResponse response = commandGradeService.saveGrade(request, gradeId);
-		return CustomApiResponse.ok(response);
-	}
 
 	@Override
 	public ResponseEntity<CustomApiResponse<GradeResponse>> createGrade(
