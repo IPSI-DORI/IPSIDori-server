@@ -13,7 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 public record CurriculumSurveyResponse(
 
 	@Schema(description = "설문 작성자 Id", example = "1")
-	Member creator,
+	Long creatorId,
 
 	@Schema(description = "공부 과목", example = "수학")
 	String subject,
@@ -41,7 +41,7 @@ public record CurriculumSurveyResponse(
 ) {
 	public static CurriculumSurveyResponse of(Curriculum curriculum) {
 		return new CurriculumSurveyResponse(
-			curriculum.getCreator(),
+			curriculum.getCreator().getId(),
 			curriculum.getSubject(),
 			curriculum.getElective(),
 			curriculum.getStudyTime(),
