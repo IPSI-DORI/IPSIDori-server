@@ -19,7 +19,6 @@ class GradeTest {
 	@Test
 	void testGradeBuilder() {
 		// given
-		Long curriculumId = 1L;
 		String subjects = "국어";
 		String elective = "언어와 매체";
 		String exam = "6월 평가원 모의고사";
@@ -30,7 +29,6 @@ class GradeTest {
 
 		// when
 		Grade gradeEntity = Grade.builder()
-			.curriculum(curriculumId)
 			.subjects(subjects)
 			.elective(elective)
 			.exam(exam)
@@ -41,7 +39,6 @@ class GradeTest {
 			.build();
 
 		// then
-		assertThat(gradeEntity.getCurriculum()).isEqualTo(curriculumId);
 		assertThat(gradeEntity.getSubjects()).isEqualTo(subjects);
 		assertThat(gradeEntity.getElective()).isEqualTo(elective);
 		assertThat(gradeEntity.getExam()).isEqualTo(exam);
@@ -56,7 +53,6 @@ class GradeTest {
 	void testSaveGrade() {
 		// given
 		Grade gradeEntity = Grade.builder()
-			.curriculum(1L)
 			.subjects("국어")
 			.elective("언어와 매체")
 			.exam("6월 평가원 모의고사")
@@ -83,7 +79,6 @@ class GradeTest {
 	void testUpdateGrade() {
 		// given
 		Grade gradeEntity = Grade.builder()
-			.curriculum(1L)
 			.subjects("국어")
 			.elective("언어와 매체")
 			.exam("6월 평가원 모의고사")
