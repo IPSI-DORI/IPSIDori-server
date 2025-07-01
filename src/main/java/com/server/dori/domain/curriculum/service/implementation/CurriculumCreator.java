@@ -28,7 +28,7 @@ public class CurriculumCreator {
 	private final GradeRepository gradeRepository;
 	private final RestClient restClient;
 
-	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request, Long memberId) {
+	public Curriculum saveSurvey(CurriculumSurveyRequest request, Long memberId) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new MemberNotFoundException());
 
@@ -43,9 +43,7 @@ public class CurriculumCreator {
 			.platform(request.platform())
 			.build();
 
-		Curriculum savedCurriculum = curriculumRepository.save(curriculum);
-
-		return CurriculumSurveyResponse.of(savedCurriculum);
+		return curriculumRepository.save(curriculum);
 	}
 
 	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId) {
