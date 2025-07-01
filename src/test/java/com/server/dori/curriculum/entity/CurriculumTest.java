@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.entity.type.Platform;
+import com.server.dori.domain.member.entity.Member;
+import com.server.dori.domain.member.entity.sub.Role;
+import com.server.dori.domain.member.entity.sub.SocialType;
 
 class CurriculumTest {
 
@@ -16,7 +19,12 @@ class CurriculumTest {
 	@Test
 	void testCurriculumBuilder() {
 		// given
-		Long creator = 1L;
+		Member member = Member.builder()
+			.email("test@example.com")
+			.role(Role.USER)
+			.socialType(SocialType.KAKAO)
+			.build();
+
 		String subject = "국어";
 		String elective = "언어와 매체";
 		String studyTime = "2~3시간";
@@ -27,7 +35,7 @@ class CurriculumTest {
 
 		// when
 		Curriculum curriculum = Curriculum.builder()
-			.creator(creator)
+			.creator(member)
 			.subject(subject)
 			.elective(elective)
 			.studyTime(studyTime)
@@ -39,7 +47,7 @@ class CurriculumTest {
 			.build();
 
 		// then
-		assertThat(curriculum.getCreator()).isEqualTo(creator);
+		assertThat(curriculum.getCreator()).isEqualTo(member);
 		assertThat(curriculum.getSubject()).isEqualTo(subject);
 		assertThat(curriculum.getElective()).isEqualTo(elective);
 		assertThat(curriculum.getStudyTime()).isEqualTo(studyTime);

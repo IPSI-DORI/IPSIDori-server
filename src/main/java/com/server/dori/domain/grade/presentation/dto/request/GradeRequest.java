@@ -1,10 +1,16 @@
 package com.server.dori.domain.grade.presentation.dto.request;
 
 public record GradeRequest(
-	Long gradeId,
+	String subjects,
+
+	String elective,
+
 	String exam,
-	int score,
+
 	int grade,
+
+	int score,
+
 	double percent
 ) {
 }

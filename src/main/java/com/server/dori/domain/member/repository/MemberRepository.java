@@ -16,7 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	default Member getByEmail(String email) {
 		return findByEmail(email)
-			.orElseThrow(MemberNotFoundException::memberNotFoundException);
+			.orElseThrow(() -> new MemberNotFoundException());
 	}
 
 	default Member getBySocialType(SocialType socialType) {
@@ -26,7 +26,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	default Member getById(Long memberId) {
 		return findById(memberId)
-			.orElseThrow(MemberNotFoundException::memberNotFoundException);
+			.orElseThrow(() -> new MemberNotFoundException());
 	}
 
 	default Optional<Member> findOptionalBySocialType(SocialType socialType) {
