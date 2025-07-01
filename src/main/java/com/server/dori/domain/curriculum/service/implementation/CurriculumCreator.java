@@ -13,7 +13,9 @@ import com.server.dori.domain.curriculum.repository.CurriculumRepository;
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.repository.GradeRepository;
 import com.server.dori.domain.grade.service.implementation.GradeCreator;
+import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
+import com.server.dori.domain.member.exception.MemberNotFoundException;
 import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,13 +25,16 @@ import lombok.RequiredArgsConstructor;
 public class CurriculumCreator {
 
 	private final CurriculumRepository curriculumRepository;
-	private final GradeCreator gradeCreator;
 	private final MemberRepository memberRepository;
 	private final GradeRepository gradeRepository;
 	private final RestClient restClient;
 
-	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request) {
+	public CurriculumSurveyResponse saveSurvey(CurriculumSurveyRequest request, Long memberId) {
+		Member member = memberRepository.findById(memberId)
+			.orElseThrow(() -> new MemberNotFoundException());
+
 		Curriculum curriculum = Curriculum.builder()
+			.creator(member)
 			.subject(request.subject())
 			.elective(request.elective())
 			.studyTime(request.studyTime())
@@ -40,9 +45,8 @@ public class CurriculumCreator {
 			.build();
 
 		Curriculum savedCurriculum = curriculumRepository.save(curriculum);
-		Grade grade = gradeCreator.createGradeWithCurriculum(savedCurriculum);
 
-		return CurriculumSurveyResponse.of(savedCurriculum, grade.getId());
+		return CurriculumSurveyResponse.of(savedCurriculum);
 	}
 
 	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId) {

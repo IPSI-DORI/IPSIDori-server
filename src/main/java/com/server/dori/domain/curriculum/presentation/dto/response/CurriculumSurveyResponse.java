@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.entity.type.Platform;
+import com.server.dori.domain.member.entity.Member;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 public record CurriculumSurveyResponse(
 
 	@Schema(description = "설문 작성자 Id", example = "1")
-	Long creator,
+	Member creator,
 
 	@Schema(description = "공부 과목", example = "수학")
 	String subject,
@@ -36,12 +37,9 @@ public record CurriculumSurveyResponse(
 	Platform platform,
 
 	@Schema(description = "설문 생성 시간", example = "2025-06-25T14:30:00")
-	LocalDateTime createAt,
-
-	@Schema(description = "관련된 Grade Id", example = "1")
-	Long gradeId
+	LocalDateTime createAt
 ) {
-	public static CurriculumSurveyResponse of(Curriculum curriculum, Long gradeId) {
+	public static CurriculumSurveyResponse of(Curriculum curriculum) {
 		return new CurriculumSurveyResponse(
 			curriculum.getCreator(),
 			curriculum.getSubject(),
@@ -51,8 +49,7 @@ public record CurriculumSurveyResponse(
 			curriculum.getWeakProblemQuestion(),
 			curriculum.getLearningGoalQuestion(),
 			curriculum.getPlatform(),
-			curriculum.getCreatedAt(),
-			gradeId
+			curriculum.getCreatedAt()
 		);
 	}
 }
