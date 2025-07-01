@@ -60,7 +60,7 @@ public class MemberController {
 		@Valid @RequestBody MemberSignupRequest requestDto
 	) {
 		if (userDetails == null) {
-			throw MemberNotFoundException.memberNotFoundException();
+			throw new MemberNotFoundException();
 		}
 
 		Member updatedMember = commandMemberService.signup(userDetails.getUsername(), requestDto);
@@ -84,7 +84,7 @@ public class MemberController {
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
 		if (userDetails == null) {
-			throw MemberNotFoundException.memberNotFoundException();
+			throw new MemberNotFoundException();
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
@@ -108,7 +108,7 @@ public class MemberController {
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	) {
 		if (userDetails == null) {
-			throw MemberNotFoundException.memberNotFoundException();
+			throw new MemberNotFoundException();
 		}
 
 		Member member = queryMemberService.getMemberInfo(userDetails.getMemberId());
@@ -132,7 +132,7 @@ public class MemberController {
 		@Valid @RequestBody MemberInfoUpdate requestDto
 	) {
 		if (userDetails == null) {
-			throw MemberNotFoundException.memberNotFoundException();
+			throw new MemberNotFoundException();
 		}
 
 		Member updatedMember = commandMemberService.updateMemberInfo(
