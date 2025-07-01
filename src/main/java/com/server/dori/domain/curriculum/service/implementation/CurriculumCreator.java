@@ -46,10 +46,10 @@ public class CurriculumCreator {
 		return curriculumRepository.save(curriculum);
 	}
 
-	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId) {
+	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId, Long gradeId) {
 		MemberInfo memberInfo = memberRepository.getById(memberId).getMemberInfo();
 		Curriculum curriculum = curriculumRepository.getById(curriculumId);
-		Grade grade = gradeRepository.getById(curriculumId);
+		Grade grade = gradeRepository.getById(gradeId);
 
 		try {
 			AICurriculumRequest request = new AICurriculumRequest(memberInfo, curriculum, grade);

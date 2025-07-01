@@ -51,6 +51,7 @@ public interface CurriculumApiController {
 	@GetMapping
 	ResponseEntity<CustomApiResponse<AICurriculumResponse>> getCurriculum(
 		@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails,
-		@RequestParam(name = "curriculumId") Long curriculumId
+		@RequestParam(name = "curriculumId") Long curriculumId,
+		@RequestParam(name = "gradeId") Long gradeId
 	);
 }

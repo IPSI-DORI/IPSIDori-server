@@ -12,6 +12,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "성적 응답 DTO")
 public record GradeResponse(
 
+	@Schema(description = "성적 Id", example = "1")
+	Long gradeId,
+
 	@Schema(description = "과목명", example = "수학")
 	String subjects,
 
@@ -35,10 +38,11 @@ public record GradeResponse(
 	LocalDate createdAt,
 
 	@Schema(description = "성적 생성자", example = "1")
-	Member creator
+	Long creator
 ) {
 	public static GradeResponse from(Grade grade) {
 		return new GradeResponse(
+			grade.getId(),
 			grade.getSubjects(),
 			grade.getElective(),
 			grade.getExam(),
@@ -46,7 +50,7 @@ public record GradeResponse(
 			grade.getGrade(),
 			grade.getPercent(),
 			grade.getCreatedAt(),
-			grade.getCreator()
+			grade.getCreator().getId()
 		);
 	}
 

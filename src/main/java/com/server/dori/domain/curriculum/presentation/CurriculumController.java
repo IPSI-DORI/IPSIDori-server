@@ -30,9 +30,10 @@ public class CurriculumController implements CurriculumApiController {
 	@Override
 	public ResponseEntity<CustomApiResponse<AICurriculumResponse>> getCurriculum(
 		@AuthenticationPrincipal CustomUserDetails userDetails,
-		@RequestParam(name = "curriculumId") Long curriculumId
+		@RequestParam(name = "curriculumId") Long curriculumId,
+		@RequestParam(name = "gradeId") Long gradeId
 	) {
-		AICurriculumResponse response = commandCuriculumService.createCurriculum(userDetails.getMemberId(), curriculumId);
+		AICurriculumResponse response = commandCuriculumService.createCurriculum(userDetails.getMemberId(), curriculumId, gradeId);
 		return CustomApiResponse.ok(response);
 	}
 }

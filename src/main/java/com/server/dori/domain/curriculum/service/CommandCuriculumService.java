@@ -21,7 +21,7 @@ public class CommandCuriculumService {
 		return CurriculumSurveyResponse.of(curriculumCreator.saveSurvey(request, memberId));
 	}
 
-	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId) {
-		return curriculumCreator.createCurriculum(memberId, curriculumId);
+	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId, Long gradeId) {
+		return curriculumCreator.createCurriculum(memberId, curriculumId, gradeId);
 	}
 }
