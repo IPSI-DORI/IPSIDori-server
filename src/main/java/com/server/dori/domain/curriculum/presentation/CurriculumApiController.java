@@ -45,7 +45,7 @@ public interface CurriculumApiController {
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "커리큘럼 조회 성공",
-			content = @Content(schema = @Schema(implementation = AICurriculumResponse.class))),
+			content = @Content(schema = @Schema(implementation = AICurriculumListResponse.class))),
 		@ApiResponse(responseCode = "404", description = "정보를 찾을 수 없음"),
 		@ApiResponse(responseCode = "500", description = "외부 API 호출 오류")
 	})
