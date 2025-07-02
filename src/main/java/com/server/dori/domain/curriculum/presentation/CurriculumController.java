@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumListResponse;
 import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
@@ -28,12 +29,12 @@ public class CurriculumController implements CurriculumApiController {
 	}
 
 	@Override
-	public ResponseEntity<CustomApiResponse<AICurriculumResponse>> getCurriculum(
+	public ResponseEntity<CustomApiResponse<AICurriculumListResponse>> getCurriculumList(
 		@AuthenticationPrincipal CustomUserDetails userDetails,
 		@RequestParam(name = "curriculumId") Long curriculumId,
 		@RequestParam(name = "gradeId") Long gradeId
 	) {
-		AICurriculumResponse response = commandCuriculumService.createCurriculum(userDetails.getMemberId(), curriculumId, gradeId);
+		AICurriculumListResponse response = commandCuriculumService.createCurriculum(userDetails.getMemberId(), curriculumId, gradeId);
 		return CustomApiResponse.ok(response);
 	}
 }

@@ -1,10 +1,13 @@
 package com.server.dori.domain.curriculum.service.implementation;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import com.server.dori.domain.curriculum.exception.ApiCallException;
 import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumRequest;
+import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumListResponse;
 import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.entity.Curriculum;
@@ -46,7 +49,7 @@ public class CurriculumCreator {
 		return curriculumRepository.save(curriculum);
 	}
 
-	public AICurriculumResponse createCurriculum(Long memberId, Long curriculumId, Long gradeId) {
+	public AICurriculumListResponse createCurriculum(Long memberId, Long curriculumId, Long gradeId) {
 		MemberInfo memberInfo = memberRepository.getById(memberId).getMemberInfo();
 		Curriculum curriculum = curriculumRepository.getById(curriculumId);
 		Grade grade = gradeRepository.getById(gradeId);
@@ -55,16 +58,16 @@ public class CurriculumCreator {
 			AICurriculumRequest request = new AICurriculumRequest(memberInfo, curriculum, grade);
 			String query = AICurriculumRequest.toQuery(request);
 
-			AICurriculumResponse response = restClient.get()
+			AICurriculumResponse[] responses = restClient.get()
 				.uri(uriBuilder -> uriBuilder
 					.path("/curriculum")
 					.queryParam("user_question", query)
 					.build())
 				.retrieve()
-				.body(AICurriculumResponse.class);
+				.body(AICurriculumResponse[].class);
 
-			System.out.println(response);
-			return response;
+			System.out.println(List.of(responses));
+			return new AICurriculumListResponse(List.of(responses));
 		} catch (Exception e) {
 			throw new ApiCallException(e.getMessage());
 		}
