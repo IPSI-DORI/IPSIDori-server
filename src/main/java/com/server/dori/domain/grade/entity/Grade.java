@@ -67,7 +67,7 @@ public class Grade {
 		this.percent = request.percent();
 	}
 
-	public boolean isCreator(Long userId) {
-		return this.creator.equals(userId);
+	public boolean isCreator(Long memberId) {
+		return this.creator.getId().equals(memberId);
 	}
 }
