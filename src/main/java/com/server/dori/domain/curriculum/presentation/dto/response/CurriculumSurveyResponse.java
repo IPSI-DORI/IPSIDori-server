@@ -13,7 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 public record CurriculumSurveyResponse(
 
 	@Schema(description = "설문 작성자 Id", example = "1")
-	Long creatorId,
+	Long creator,
 
 	@Schema(description = "공부 과목", example = "수학")
 	String subject,
