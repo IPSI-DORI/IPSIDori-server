@@ -12,8 +12,11 @@ import jakarta.validation.constraints.NotBlank;
 @Schema(description = "커리큘럼 설문 응답 DTO")
 public record CurriculumSurveyResponse(
 
+	@Schema(description = "설문 Id", example = "1")
+	Long curriculumId,
+
 	@Schema(description = "설문 작성자 Id", example = "1")
-	Member creator,
+	Long creator,
 
 	@Schema(description = "공부 과목", example = "수학")
 	String subject,
@@ -41,7 +44,8 @@ public record CurriculumSurveyResponse(
 ) {
 	public static CurriculumSurveyResponse of(Curriculum curriculum) {
 		return new CurriculumSurveyResponse(
-			curriculum.getCreator(),
+			curriculum.getId(),
+			curriculum.getCreator().getId(),
 			curriculum.getSubject(),
 			curriculum.getElective(),
 			curriculum.getStudyTime(),

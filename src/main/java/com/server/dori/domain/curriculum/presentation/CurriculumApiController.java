@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumListResponse;
 import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
@@ -44,13 +45,14 @@ public interface CurriculumApiController {
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "커리큘럼 조회 성공",
-			content = @Content(schema = @Schema(implementation = AICurriculumResponse.class))),
+			content = @Content(schema = @Schema(implementation = AICurriculumListResponse.class))),
 		@ApiResponse(responseCode = "404", description = "정보를 찾을 수 없음"),
 		@ApiResponse(responseCode = "500", description = "외부 API 호출 오류")
 	})
 	@GetMapping
-	ResponseEntity<CustomApiResponse<AICurriculumResponse>> getCurriculum(
+	ResponseEntity<CustomApiResponse<AICurriculumListResponse>> getCurriculumList(
 		@Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails,
-		@RequestParam(name = "curriculumId") Long curriculumId
+		@RequestParam(name = "curriculumId") Long curriculumId,
+		@RequestParam(name = "gradeId") Long gradeId
 	);
 }

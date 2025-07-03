@@ -3,7 +3,6 @@ package com.server.dori.domain.grade.entity;
 import java.time.LocalDate;
 
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
-import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
 import com.server.dori.domain.member.entity.Member;
 
 import jakarta.persistence.Entity;
@@ -59,13 +58,6 @@ public class Grade {
 		this.createdAt = LocalDate.now();
 	}
 
-	public void saveGrade(GradeWithCurriculumRequest request) {
-		this.exam = request.exam();
-		this.score = request.score();
-		this.grade = request.grade();
-		this.percent = request.percent();
-	}
-
 	public void updateGrade(GradeRequest request) {
 		this.subjects = request.subjects();
 		this.elective = request.elective();
@@ -75,7 +67,7 @@ public class Grade {
 		this.percent = request.percent();
 	}
 
-	public boolean isCreator(Long userId) {
-		return this.creator.equals(userId);
+	public boolean isCreator(Long memberId) {
+		return this.creator.getId().equals(memberId);
 	}
 }

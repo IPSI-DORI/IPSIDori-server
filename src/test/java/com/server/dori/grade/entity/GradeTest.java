@@ -2,7 +2,6 @@ package com.server.dori.grade.entity;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.lang.reflect.Field;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.DisplayName;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.presentation.dto.request.GradeRequest;
-import com.server.dori.domain.grade.presentation.dto.request.GradeWithCurriculumRequest;
-import com.server.dori.domain.member.entity.Member;
 
 class GradeTest {
 
@@ -46,32 +43,6 @@ class GradeTest {
 		assertThat(gradeEntity.getGrade()).isEqualTo(grade);
 		assertThat(gradeEntity.getPercent()).isEqualTo(percent);
 		assertThat(gradeEntity.getCreatedAt()).isNotNull();
-	}
-
-	@DisplayName("커리큘럼 성적을 정상적으로 수정한다.")
-	@Test
-	void testSaveGrade() {
-		// given
-		Grade gradeEntity = Grade.builder()
-			.subjects("국어")
-			.elective("언어와 매체")
-			.exam("6월 평가원 모의고사")
-			.score(92)
-			.grade(1)
-			.percent(89.2)
-			.createdAt(LocalDate.now())
-			.build();
-
-		GradeWithCurriculumRequest request = new GradeWithCurriculumRequest(1L, "6월 평가원 모의고사", 95, 1, 90.2);
-
-		// when
-		gradeEntity.saveGrade(request);
-
-		// then
-		assertThat(gradeEntity.getExam()).isEqualTo(request.exam());
-		assertThat(gradeEntity.getScore()).isEqualTo(request.score());
-		assertThat(gradeEntity.getGrade()).isEqualTo(request.grade());
-		assertThat(gradeEntity.getPercent()).isEqualTo(request.percent());
 	}
 
 	@DisplayName("성적을 정상적으로 수정한다.")
