@@ -29,7 +29,7 @@ public class CourseCreator {
 		CourseRequest.CourseDto courseDto = request.recommendedCourse();
 
 		Course course = Course.builder()
-			.id(member.getId())
+			.creator(member)
 			.title(courseDto.title())
 			.description(courseDto.description())
 			.subject(courseDto.subject())
