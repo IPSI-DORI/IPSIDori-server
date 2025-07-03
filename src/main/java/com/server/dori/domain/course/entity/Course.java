@@ -1,9 +1,16 @@
 package com.server.dori.domain.course.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.server.dori.domain.course.entity.sub.Lecture;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,7 +25,9 @@ public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long courseId;
+	private Long id;
+
+	private String externalCourseId;
 
 	private String title;
 
@@ -36,10 +45,14 @@ public class Course {
 
 	private String recommend;
 
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Lecture> lectureList = new ArrayList<>();
+
 	@Builder
-	public Course(Long courseId, String title, String description, String subject, String teacher,
+	public Course(Long id, String externalCourseId, String title, String description, String subject, String teacher,
 		String grade, String platform, int price, String recommend) {
-		this.courseId = courseId;
+		this.id = id;
+		this.externalCourseId = externalCourseId;
 		this.title = title;
 		this.description = description;
 		this.subject = subject;
