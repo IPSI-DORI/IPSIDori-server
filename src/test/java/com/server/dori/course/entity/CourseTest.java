@@ -97,10 +97,9 @@ class CourseTest {
 		assertThat(lecture.getCourse()).isEqualTo(course);
 	}
 
-	@SneakyThrows
 	@DisplayName("Course 생성자가 맞는지 확인한다.")
 	@Test
-	void testIsCreator() {
+	void testIsCreator() throws NoSuchFieldException, IllegalAccessException {
 		// given
 		Member member = Member.builder()
 			.email("test@example.com")
