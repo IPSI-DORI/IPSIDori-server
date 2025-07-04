@@ -23,7 +23,7 @@ public class QueryCourseService {
 
 	public CourseResponse getCourse(Long memberId, Long courseId) {
 		Course course = courseReader.read(courseId);
-		courseValidator.checkGradeAuthor(course, memberId);
+		courseValidator.checkCourseAuthor(course, memberId);
 		return CourseResponse.of(course);
 	}
 

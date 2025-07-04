@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,6 @@ import com.server.dori.domain.course.service.QueryCourseService;
 import com.server.dori.domain.member.entity.CustomUserDetails;
 import com.server.dori.global.response.CustomApiResponse;
 
-import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -51,5 +49,13 @@ public class CourseController implements CourseApiController{
 	) {
 		CourseResponse response = queryCourseService.getCourse(userDetails.getMemberId(), courseId);
 		return CustomApiResponse.ok(response);
+	}
+
+	public ResponseEntity<CustomApiResponse> deleteCourse(
+		@RequestParam(name = "courseId") Long courseId,
+		@AuthenticationPrincipal CustomUserDetails userDetails
+	) {
+		commandCourseService.deleteCourse(userDetails.getMemberId(), courseId);
+		return ResponseEntity.noContent().build();
 	}
 }

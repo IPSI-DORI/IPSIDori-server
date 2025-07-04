@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,18 @@ public interface CourseApiController {
 	@PostMapping
 	ResponseEntity<CustomApiResponse<CourseResponse>> createCourse(
 		@RequestBody CourseRequest request,
+		@AuthenticationPrincipal CustomUserDetails userDetails
+	);
+
+	@Operation(summary = "강의 삭제", description = "강의를 삭제합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "204", description = "강의 삭제 성공",
+			content = @Content(schema = @Schema(implementation = CurriculumSurveyResponse.class))),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청")
+	})
+	@DeleteMapping
+	ResponseEntity<CustomApiResponse> deleteCourse(
+		@RequestParam(name = "courseId") Long courseId,
 		@AuthenticationPrincipal CustomUserDetails userDetails
 	);
 }

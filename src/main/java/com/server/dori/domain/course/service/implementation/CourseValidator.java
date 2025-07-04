@@ -14,7 +14,7 @@ public class CourseValidator {
 		}
 	}
 
-	public void checkGradeAuthor(Course course, Long memberId) {
+	public void checkCourseAuthor(Course course, Long memberId) {
 		if (!course.isCreator(memberId)) {
 			throw new CourseNotAuthorException();
 		}
