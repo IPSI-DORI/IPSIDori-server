@@ -66,8 +66,7 @@ public interface CourseApiController {
 
 	@Operation(summary = "강의 삭제", description = "강의를 삭제합니다.")
 	@ApiResponses({
-		@ApiResponse(responseCode = "204", description = "강의 삭제 성공",
-			content = @Content(schema = @Schema(implementation = CurriculumSurveyResponse.class))),
+		@ApiResponse(responseCode = "204", description = "강의 삭제 성공"),
 		@ApiResponse(responseCode = "400", description = "잘못된 요청")
 	})
 	@DeleteMapping
