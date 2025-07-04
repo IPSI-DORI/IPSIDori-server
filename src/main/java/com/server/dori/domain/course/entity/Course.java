@@ -75,4 +75,8 @@ public class Course {
 		lecture.assignCourse(this);
 		this.lectureList.add(lecture);
 	}
+
+	public boolean isCreator(Long memberId) {
+		return this.creator.getId().equals(memberId);
+	}
 }
