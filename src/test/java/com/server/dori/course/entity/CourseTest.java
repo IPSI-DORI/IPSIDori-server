@@ -15,8 +15,6 @@ import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.sub.Role;
 import com.server.dori.domain.member.entity.sub.SocialType;
 
-import lombok.SneakyThrows;
-
 class CourseTest {
 
 	@DisplayName("강의를 정상적으로 저장한다.")
