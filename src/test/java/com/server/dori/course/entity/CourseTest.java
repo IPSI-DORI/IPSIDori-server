@@ -21,7 +21,6 @@ class CourseTest {
 	@Test
 	void testCourseBuilder() {
 		// given
-		Long id = 1L;
 		String title = "[2025 수능완성] 문학/비문학 - 홍길동전 (실전편)";
 		String description = "문학·비문학 개념 완성 강의";
 		String subject = "국어";
@@ -33,7 +32,6 @@ class CourseTest {
 
 		// when
 		Course course = Course.builder()
-			.id(id)
 			.title(title)
 			.description(description)
 			.subject(subject)
@@ -45,7 +43,6 @@ class CourseTest {
 			.build();
 
 		// then
-		assertThat(course.getId()).isEqualTo(id);
 		assertThat(course.getTitle()).isEqualTo(title);
 		assertThat(course.getDescription()).isEqualTo(description);
 		assertThat(course.getSubject()).isEqualTo(subject);

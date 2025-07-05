@@ -56,10 +56,9 @@ public class Course {
 	private Member creator;
 
 	@Builder
-	public Course(Member creator, Long id, String title, String description, String subject, String teacher,
+	public Course(Member creator, String title, String description, String subject, String teacher,
 		String grade, String platform, int price, String recommend) {
 		this.creator = creator;
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.subject = subject;
