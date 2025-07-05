@@ -11,7 +11,6 @@ import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumL
 import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.entity.Curriculum;
-import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
 import com.server.dori.domain.curriculum.repository.CurriculumRepository;
 import com.server.dori.domain.grade.entity.Grade;
 import com.server.dori.domain.grade.repository.GradeRepository;
