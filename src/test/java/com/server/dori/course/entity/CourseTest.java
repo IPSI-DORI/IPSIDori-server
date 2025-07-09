@@ -26,7 +26,7 @@ class CourseTest {
 		String subject = "국어";
 		String teacher = "홍길동";
 		String grade = "고1";
-		String platform = "EBSi";
+		String platform = "ebsi";
 		int price = 0;
 		String recommend = "문학에 약한 학생에게 추천";
 

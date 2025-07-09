@@ -65,7 +65,7 @@ public record CourseResponse(
 		@Schema(description = "대상 학년", example = "고1")
 		String grade,
 
-		@Schema(description = "플랫폼", example = "EBSi")
+		@Schema(description = "플랫폼", example = "ebsi")
 		String platform,
 
 		@Schema(description = "가격", example = "0")
