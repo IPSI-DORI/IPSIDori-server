@@ -2,13 +2,13 @@ package com.server.dori.domain.curriculum.service.implementation;
 
 import java.util.List;
 
+import com.server.dori.domain.curriculum.presentation.dto.response.AICourseDetailResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import com.server.dori.domain.curriculum.exception.ApiCallException;
 import com.server.dori.domain.curriculum.presentation.dto.request.AICurriculumRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumListResponse;
-import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.entity.Curriculum;
 import com.server.dori.domain.curriculum.repository.CurriculumRepository;
@@ -57,16 +57,15 @@ public class CurriculumCreator {
 			AICurriculumRequest request = new AICurriculumRequest(memberInfo, curriculum, grade);
 			String query = AICurriculumRequest.toQuery(request);
 
-			AICurriculumResponse[] responses = restClient.get()
-				.uri(uriBuilder -> uriBuilder
-					.path("/curriculum")
-					.queryParam("user_question", query)
-					.build())
-				.retrieve()
-				.body(AICurriculumResponse[].class);
+			AICurriculumListResponse response = restClient.get()
+					.uri(uriBuilder -> uriBuilder
+							.path("/curriculum")
+							.queryParam("user_question", query)
+							.build())
+					.retrieve()
+					.body(AICurriculumListResponse.class);
 
-			System.out.println(List.of(responses));
-			return new AICurriculumListResponse(List.of(responses));
+			return response;
 		} catch (Exception e) {
 			throw new ApiCallException(e.getMessage());
 		}
