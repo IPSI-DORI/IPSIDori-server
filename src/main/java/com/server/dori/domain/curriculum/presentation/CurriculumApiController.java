@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumListResponse;
-import com.server.dori.domain.curriculum.presentation.dto.response.AICurriculumResponse;
 import com.server.dori.domain.curriculum.presentation.dto.request.CurriculumSurveyRequest;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
 import com.server.dori.domain.member.entity.CustomUserDetails;
