@@ -8,6 +8,6 @@ public record LectureResponse(
 	@Schema(description = "강의 제목", example = "도형의 성질")
 	String title,
 
-	@Schema(description = "강의 세부 정보", example = "핵심 개념 위주 설명")
+	@Schema(description = "강의 세부 정보", example = "강의시간 49:08")
 	String info
 ) {}

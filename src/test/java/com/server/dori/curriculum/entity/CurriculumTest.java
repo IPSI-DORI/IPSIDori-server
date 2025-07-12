@@ -31,7 +31,7 @@ class CurriculumTest {
 		String studyDays = "월, 수, 금";
 		String weakProblemQuestion = "문제에서 요구하는 게 뭔지 잘 모르겠어요.";
 		String learningGoalQuestion = "심화까지 깊이있게 배우기";
-		Platform platform = Platform.EBSi;
+		Platform platform = Platform.ebsi;
 
 		// when
 		Curriculum curriculum = Curriculum.builder()

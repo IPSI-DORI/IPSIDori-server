@@ -30,8 +30,8 @@ public class AIConfig {
 	private static final int MAX_RETRIES = 0;
 	private static final long RETRY_INTERVAL_IN_SECONDS = 1L;
 
-	private static final long RESPONSE_TIMEOUT = 5L;
-	private static final long CONNECTION_REQUEST_TIMEOUT = 3L;
+	private static final long RESPONSE_TIMEOUT = 120L;
+	private static final long CONNECTION_REQUEST_TIMEOUT = 10L;
 
 	@Bean
 	public RestClient restClient(HttpClient httpClient) {

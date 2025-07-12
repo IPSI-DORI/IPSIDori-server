@@ -27,7 +27,7 @@ public record CurriculumSurveyRequest(
 	@Schema(description = "현재 학습 목표가 무엇인가요?", example = "탄탄한 기본기 다지기")
 	@NotBlank String learningGoalQuestion,
 
-	@Schema(description = "강의 플랫폼", example = "EBSi",
-		allowableValues = {"EBSi", "메가스터디", "대성마이맥", "이투스"})
+	@Schema(description = "강의 플랫폼", example = "ebsi",
+		allowableValues = {"ebsi", "mega"})
 	@NotNull Platform platform
 ) {}
