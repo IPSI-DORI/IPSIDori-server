@@ -1,23 +1,28 @@
 package com.server.dori.domain.auth.service.implementation;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.auth.service.dto.KakaoUserInfo;
 import com.server.dori.domain.member.entity.Member;
+import com.server.dori.domain.member.entity.sub.Role;
+import com.server.dori.domain.member.entity.sub.SocialType;
 import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthReader {
+public class AuthCreator {
 	private final MemberRepository memberRepository;
 
-	@Transactional(readOnly = true)
-	public Optional<Member> findMemberByKakaoUserInfo(KakaoUserInfo userInfo) {
-		return memberRepository.findByEmail(userInfo.email());
+	@Transactional
+	public Member createMemberByKakaoUserInfo(KakaoUserInfo userInfo) {
+		Member member = Member.builder()
+			.email(userInfo.email())
+			.socialType(SocialType.KAKAO)
+			.role(Role.USER)
+			.build();
+		return memberRepository.save(member);
 	}
 }

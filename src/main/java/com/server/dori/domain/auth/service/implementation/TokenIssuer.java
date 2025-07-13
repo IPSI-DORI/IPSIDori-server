@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
 import com.server.dori.domain.member.entity.Member;
@@ -16,7 +16,7 @@ import com.server.dori.global.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class TokenIssuer {
 
