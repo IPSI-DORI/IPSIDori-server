@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.server.dori.domain.member.entity.CustomUserDetails;
+import com.server.dori.domain.member.presentation.dto.request.HighSchoolSignupRequest;
 import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdate;
-import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequest;
+import com.server.dori.domain.member.presentation.dto.request.RetryStudentSignupRequest;
 import com.server.dori.domain.member.presentation.dto.response.MemberInfoDetailResponse;
 import com.server.dori.domain.member.presentation.dto.response.MemberInfoResponse;
 import com.server.dori.domain.member.presentation.dto.response.MemberSignupResponse;
@@ -30,8 +31,8 @@ import jakarta.validation.Valid;
 public interface MemberApiController {
 
 	@Operation(
-		summary = "회원가입 (추가 정보 입력)",
-		description = "OAuth2 로그인 후 발급받은 토큰으로 추가 정보를 입력하여 회원가입을 완료합니다."
+		summary = "고등학생 회원가입",
+		description = "OAuth2 로그인 후 발급받은 토큰으로 고등학생 추가 정보를 입력하여 회원가입을 완료합니다."
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "회원가입 성공"),
@@ -40,11 +41,29 @@ public interface MemberApiController {
 		@ApiResponse(responseCode = "409", description = "이미 가입된 회원")
 	})
 	@SecurityRequirement(name = "bearerAuth")
-	@PostMapping("/signup")
-	ResponseEntity<CustomApiResponse<MemberSignupResponse>> signup(
+	@PostMapping("/signup/highschool")
+	ResponseEntity<CustomApiResponse<MemberSignupResponse>> signupHighSchool(
 		@Parameter(description = "현재 로그인한 사용자 정보")
 		@AuthenticationPrincipal UserDetails userDetails,
-		@Valid @RequestBody MemberSignupRequest requestDto
+		@Valid @RequestBody HighSchoolSignupRequest requestDto
+	);
+
+	@Operation(
+		summary = "재수생/반수생 회원가입",
+		description = "OAuth2 로그인 후 발급받은 토큰으로 재수생/반수생 추가 정보를 입력하여 회원가입을 완료합니다."
+	)
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "회원가입 성공"),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청"),
+		@ApiResponse(responseCode = "401", description = "인증되지 않은 사용자"),
+		@ApiResponse(responseCode = "409", description = "이미 가입된 회원")
+	})
+	@SecurityRequirement(name = "bearerAuth")
+	@PostMapping("/signup/retry")
+	ResponseEntity<CustomApiResponse<MemberSignupResponse>> signupRetryStudent(
+		@Parameter(description = "현재 로그인한 사용자 정보")
+		@AuthenticationPrincipal UserDetails userDetails,
+		@Valid @RequestBody RetryStudentSignupRequest requestDto
 	);
 
 	@Operation(
