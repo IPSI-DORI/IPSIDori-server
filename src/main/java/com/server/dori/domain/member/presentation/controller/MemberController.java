@@ -18,9 +18,7 @@ import com.server.dori.domain.member.service.QueryMemberService;
 import com.server.dori.global.response.CustomApiResponse;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class MemberController implements MemberApiController {
