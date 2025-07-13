@@ -27,8 +27,6 @@ public class QueryMemberService {
 
 	public MemberInfoResponse createInfoResponse(Member member) {
 		MemberInfo memberInfo = member.getMemberInfo();
-		memberValidator.validateMemberInfo(memberInfo);
-		memberValidator.validateLearningStyleScore(memberInfo);
 
 		String nickname = memberReader.getNickname(member);
 		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
@@ -37,8 +35,6 @@ public class QueryMemberService {
 
 	public MemberInfoDetailResponse createInfoDetailResponse(Member member) {
 		MemberInfo memberInfo = member.getMemberInfo();
-		memberValidator.validateMemberInfo(memberInfo);
-		memberValidator.validateLearningStyleScore(memberInfo);
 
 		String nickname = memberReader.getNickname(member);
 		String characterImageUrl = memberReader.getCharacterImageUrl(memberInfo);
@@ -46,7 +42,7 @@ public class QueryMemberService {
 		return new MemberInfoDetailResponse(
 			member.getId(),
 			nickname,
-			memberInfo.getGrade(),
+			memberInfo.getSchoolYear(),
 			memberInfo.getTargetUniversity(),
 			memberInfo.getTargetMajor(),
 			characterImageUrl);
@@ -54,8 +50,6 @@ public class QueryMemberService {
 
 	public MemberSignupResponse createSignupResponse(Member member) {
 		MemberInfo memberInfo = member.getMemberInfo();
-		memberValidator.validateMemberInfo(memberInfo);
-		memberValidator.validateLearningStyleScore(memberInfo);
 
 		String nickname = memberReader.getNickname(member);
 		CharacterInfo characterInfo = memberReader.createCharacterInfo(memberInfo);

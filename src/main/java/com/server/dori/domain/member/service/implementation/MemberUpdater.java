@@ -7,7 +7,7 @@ import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
 import com.server.dori.domain.member.entity.sub.LearningStyle;
 import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdate;
-import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequest;
+import com.server.dori.domain.member.presentation.dto.request.SignupRequest;
 import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class MemberUpdater {
 
 		memberInfo.updateInfo(
 			requestDto.nickname(),
-			requestDto.grade(),
+			requestDto.schoolYear(),
 			requestDto.targetUniversity(),
 			requestDto.targetMajor()
 		);
@@ -32,7 +32,7 @@ public class MemberUpdater {
 	}
 
 	@Transactional
-	public Member updateMemberWithAdditionalInfo(Member member, MemberSignupRequest requestDto) {
+	public Member updateMemberWithAdditionalInfo(Member member, SignupRequest requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
 		int learningStyleScore = calculateLearningStyleScore(
@@ -44,9 +44,9 @@ public class MemberUpdater {
 
 		memberInfo.updateForSignup(
 			requestDto.nickname(),
-			requestDto.grade(),
-			requestDto.currentUniversity(),
-			requestDto.currentMajor(),
+			requestDto.schoolYear(),
+			requestDto.getCurrentUniversity(),
+			requestDto.getCurrentMajor(),
 			requestDto.targetUniversity(),
 			requestDto.targetMajor(),
 			LearningStyle.fromScore(learningStyleScore),
