@@ -1,6 +1,7 @@
 package com.server.dori.domain.member.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class QueryMemberService {
 	private final MemberReader memberReader;
 	private final MemberValidator memberValidator;

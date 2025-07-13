@@ -1,6 +1,7 @@
 package com.server.dori.domain.member.service.implementation;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.exception.MemberConflictException;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
  * 회원 관련 비즈니스 로직 검증을 담당하는 클래스
  * 서비스 계층에서 사용되는 검증 로직만 포함
  */
-@Component
+@Service
 @RequiredArgsConstructor
 public class MemberValidator {
 

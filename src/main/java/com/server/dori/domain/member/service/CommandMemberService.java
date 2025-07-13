@@ -1,6 +1,7 @@
 package com.server.dori.domain.member.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdate;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommandMemberService {
 	private final MemberUpdater memberUpdater;
 	private final MemberValidator memberValidator;

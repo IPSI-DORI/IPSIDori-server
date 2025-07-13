@@ -1,6 +1,7 @@
 package com.server.dori.domain.member.service.implementation;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.member.entity.Member;
@@ -12,12 +13,11 @@ import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class MemberUpdater {
 	private final MemberRepository memberRepository;
 
-	@Transactional
 	public Member updateInfo(Member member, MemberInfoUpdate requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
@@ -31,7 +31,6 @@ public class MemberUpdater {
 		return memberRepository.save(member);
 	}
 
-	@Transactional
 	public Member updateMemberWithAdditionalInfo(Member member, SignupRequest requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
