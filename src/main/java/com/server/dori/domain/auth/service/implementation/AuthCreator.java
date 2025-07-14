@@ -1,7 +1,6 @@
 package com.server.dori.domain.auth.service.implementation;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.auth.service.dto.KakaoUserInfo;
 import com.server.dori.domain.member.entity.Member;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 public class AuthCreator {
 	private final MemberRepository memberRepository;
 
-	@Transactional
 	public Member createMemberByKakaoUserInfo(KakaoUserInfo userInfo) {
 		Member member = Member.builder()
 			.email(userInfo.email())
