@@ -11,6 +11,10 @@ public class AuthBadRequestException extends CustomException {
 	}
 
 	public static AuthBadRequestException oauthProviderNotFound() {
-		return new AuthBadRequestException(HttpStatus.BAD_REQUEST, "AUTH_400_1", "지원하지 않는 소셜 로그인입니다.");
+		return new AuthBadRequestException(HttpStatus.BAD_REQUEST, "AUTH_400_1", "카카오 인증 처리 중 오류가 발생했습니다.");
+	}
+
+	public static AuthBadRequestException invalidAuthorizationCode() {
+		return new AuthBadRequestException(HttpStatus.BAD_REQUEST, "AUTH_400_2", "유효하지 않은 인가코드입니다.");
 	}
 }
