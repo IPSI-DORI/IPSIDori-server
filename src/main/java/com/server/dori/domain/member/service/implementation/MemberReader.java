@@ -3,8 +3,7 @@ package com.server.dori.domain.member.service.implementation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import com.server.dori.domain.member.entity.CustomUserDetails;
 import com.server.dori.domain.member.entity.Member;
@@ -15,8 +14,7 @@ import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
-@Transactional(readOnly = true)
+@Service
 @RequiredArgsConstructor
 public class MemberReader {
 	private final MemberRepository memberRepository;

@@ -1,6 +1,6 @@
 package com.server.dori.domain.member.presentation.dto.response;
 
-import com.server.dori.domain.member.entity.sub.Grade;
+import com.server.dori.domain.member.entity.sub.SchoolYear;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -12,11 +12,9 @@ public record MemberInfoDetailResponse(
 	@Schema(description = "사용자 닉네임", example = "홍길동")
 	String nickname,
 
-	@Schema(description = "학년<br> " + "HIGH_1: 고등학교 1학년<br> " + "HIGH_2: 고등학교 2학년<br> " + "HIGH_3: 고등학교 3학년<br> "
-		+ "RETRY_1: 재수<br> " + "RETRY_2: 반수",
-		example = "HIGH_1",
-		allowableValues = {"HIGH_1", "HIGH_2", "HIGH_3", "RETRY_1", "RETRY_2"})
-	Grade grade,
+	@Schema(description = "학년", example = "HIGH_1/HIGH_2/HIGH_3/JAESU/BANSU",
+		allowableValues = {"HIGH_1", "HIGH_2", "HIGH_3", "JAESU", "BANSU"})
+	SchoolYear schoolYear,
 
 	@Schema(description = "희망 대학교", example = "서울대학교")
 	String targetUniversity,

@@ -1,29 +1,29 @@
 package com.server.dori.domain.member.service.implementation;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.server.dori.domain.member.entity.Member;
 import com.server.dori.domain.member.entity.MemberInfo;
 import com.server.dori.domain.member.entity.sub.LearningStyle;
 import com.server.dori.domain.member.presentation.dto.request.MemberInfoUpdate;
-import com.server.dori.domain.member.presentation.dto.request.MemberSignupRequest;
+import com.server.dori.domain.member.presentation.dto.request.SignupRequest;
 import com.server.dori.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class MemberUpdater {
 	private final MemberRepository memberRepository;
 
-	@Transactional
 	public Member updateInfo(Member member, MemberInfoUpdate requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
 		memberInfo.updateInfo(
 			requestDto.nickname(),
-			requestDto.grade(),
+			requestDto.schoolYear(),
 			requestDto.targetUniversity(),
 			requestDto.targetMajor()
 		);
@@ -31,8 +31,7 @@ public class MemberUpdater {
 		return memberRepository.save(member);
 	}
 
-	@Transactional
-	public Member updateMemberWithAdditionalInfo(Member member, MemberSignupRequest requestDto) {
+	public Member updateMemberWithAdditionalInfo(Member member, SignupRequest requestDto) {
 		MemberInfo memberInfo = getOrCreateMemberInfo(member);
 
 		int learningStyleScore = calculateLearningStyleScore(
@@ -44,9 +43,9 @@ public class MemberUpdater {
 
 		memberInfo.updateForSignup(
 			requestDto.nickname(),
-			requestDto.grade(),
-			requestDto.currentUniversity(),
-			requestDto.currentMajor(),
+			requestDto.schoolYear(),
+			requestDto.getCurrentUniversity(),
+			requestDto.getCurrentMajor(),
 			requestDto.targetUniversity(),
 			requestDto.targetMajor(),
 			LearningStyle.fromScore(learningStyleScore),
