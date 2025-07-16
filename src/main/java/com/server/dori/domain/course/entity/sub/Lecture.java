@@ -29,14 +29,17 @@ public class Lecture {
 
 	private String info;
 
+	private boolean isCheck;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "course_id")
 	private Course course;
 
 	@Builder
-	public Lecture(String title, String info) {
+	public Lecture(String title, String info, boolean isCheck) {
 		this.title = title;
 		this.info = info;
+		this.isCheck = isCheck;
 	}
 
 	public boolean hasCourse() {
@@ -45,5 +48,14 @@ public class Lecture {
 
 	public void assignCourse(Course course) {
 		this.course = course;
+	}
+
+	public void updateLecture(String title, String info) {
+		this.title = title;
+		this.info = info;
+	}
+
+	public void updateCheck(boolean isCheck) {
+		this.isCheck = true;
 	}
 }

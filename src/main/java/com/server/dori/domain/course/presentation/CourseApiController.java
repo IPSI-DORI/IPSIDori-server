@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.server.dori.domain.course.presentation.dto.request.CourseRequest;
+import com.server.dori.domain.course.presentation.dto.request.LectureRequest;
 import com.server.dori.domain.course.presentation.dto.response.CourseListResponse;
 import com.server.dori.domain.course.presentation.dto.response.CourseResponse;
 import com.server.dori.domain.curriculum.presentation.dto.response.CurriculumSurveyResponse;
@@ -73,5 +75,18 @@ public interface CourseApiController {
 	ResponseEntity<CustomApiResponse> deleteCourse(
 		@RequestParam(name = "courseId") Long courseId,
 		@AuthenticationPrincipal CustomUserDetails userDetails
+	);
+
+	@Operation(summary = "강의 수강 상태 변경", description = "강의 수강 상태(투두)를 변경합니다.")
+	@ApiResponses({
+		@ApiResponse(responseCode = "404", description = "강의를 찾을 수 없음"),
+		@ApiResponse(responseCode = "400", description = "잘못된 요청")
+	})
+	@PutMapping("/check/{lectureId}")
+	ResponseEntity<CustomApiResponse> checkLecture(
+		@RequestParam(name = "lectureId") Long lectureId,
+		@AuthenticationPrincipal CustomUserDetails userDetails,
+		@PathVariable(name = "courseId") Long courseId,
+		@RequestBody LectureRequest request
 	);
 }

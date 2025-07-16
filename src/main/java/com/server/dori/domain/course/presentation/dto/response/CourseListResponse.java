@@ -1,6 +1,7 @@
 package com.server.dori.domain.course.presentation.dto.response;
 
 import com.server.dori.domain.course.entity.Course;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "강의 리스트 응답 DTO")

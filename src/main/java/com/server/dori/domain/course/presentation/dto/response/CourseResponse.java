@@ -3,7 +3,9 @@ package com.server.dori.domain.course.presentation.dto.response;
 import java.util.List;
 
 import com.server.dori.domain.course.entity.Course;
+
 import io.swagger.v3.oas.annotations.media.Schema;
+
 
 @Schema(description = "강의 상세 응답 DTO")
 public record CourseResponse(
@@ -13,6 +15,9 @@ public record CourseResponse(
 
 	@Schema(description = "생성자 회원 Id", example = "10")
 	Long creator,
+
+	@Schema(description = "강의 수강(투두) 상태", example = "1")
+	int checkCount,
 
 	@Schema(description = "추천 강의 정보")
 	CourseDto recommendedCourse,
@@ -34,14 +39,17 @@ public record CourseResponse(
 
 		List<LectureDto> lectures = course.getLectureList().stream()
 			.map(lecture -> new LectureDto(
+				lecture.getId(),
 				lecture.getTitle(),
-				lecture.getInfo()
+				lecture.getInfo(),
+				lecture.isCheck()
 			))
 			.toList();
 
 		return new CourseResponse(
 			course.getId(),
 			course.getCreator().getId(),
+			course.getCheckCount(),
 			courseDto,
 			lectures
 		);
@@ -73,15 +81,22 @@ public record CourseResponse(
 
 		@Schema(description = "추천 대상 설명", example = "문학에 약한 학생에게 추천")
 		String recommend
-	) {}
+	) {
+	}
 
 	@Schema(description = "강의(lecture) DTO")
 	public record LectureDto(
+		@Schema(description = "강의 투두 Id", example = "1")
+		Long id,
 
 		@Schema(description = "강의 제목", example = "1강 OT")
 		String title,
 
 		@Schema(description = "강의 정보", example = "수업 내용에 대한 오리엔테이션입니다.")
-		String info
-	) {}
+		String info,
+
+		@Schema(description = "강의 수강 상태", example = "false")
+		boolean isCheck
+	) {
+	}
 }
