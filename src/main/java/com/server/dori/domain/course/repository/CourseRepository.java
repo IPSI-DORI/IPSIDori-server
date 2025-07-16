@@ -9,7 +9,7 @@ import com.server.dori.domain.course.exception.CourseNotFoundException;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 	default Course getById(Long courseId) {
-		return findById(courseId).orElseThrow(() -> new CourseNotFoundException());
+		return findById(courseId).orElseThrow(() -> CourseNotFoundException.courseNotFoundException());
 	}
 
 	List<Course> findAllByCreatorId(Long creatorId);

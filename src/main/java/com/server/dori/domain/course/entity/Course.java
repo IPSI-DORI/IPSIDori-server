@@ -48,6 +48,8 @@ public class Course {
 
 	private String recommend;
 
+	private int checkCount;
+
 	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Lecture> lectureList = new ArrayList<>();
 
@@ -57,7 +59,7 @@ public class Course {
 
 	@Builder
 	public Course(Member creator, String title, String description, String subject, String teacher,
-		String grade, String platform, int price, String recommend) {
+		String grade, String platform, int price, String recommend, int checkCount) {
 		this.creator = creator;
 		this.title = title;
 		this.description = description;
@@ -67,6 +69,7 @@ public class Course {
 		this.platform = platform;
 		this.price = price;
 		this.recommend = recommend;
+		this.checkCount = checkCount;
 	}
 
 	public void addLecture(Lecture lecture, CourseValidator validator) {
@@ -77,5 +80,13 @@ public class Course {
 
 	public boolean isCreator(Long memberId) {
 		return this.creator.getId().equals(memberId);
+	}
+
+	public void increaseCheckCount() {
+		this.checkCount++;
+	}
+
+	public void decreaseCheckCount() {
+		this.checkCount--;
 	}
 }

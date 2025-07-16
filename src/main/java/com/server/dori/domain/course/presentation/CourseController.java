@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.server.dori.domain.course.presentation.dto.request.CourseRequest;
+import com.server.dori.domain.course.presentation.dto.request.LectureRequest;
 import com.server.dori.domain.course.presentation.dto.response.CourseListResponse;
 import com.server.dori.domain.course.presentation.dto.response.CourseResponse;
 import com.server.dori.domain.course.service.CommandCourseService;
@@ -57,5 +60,15 @@ public class CourseController implements CourseApiController{
 	) {
 		commandCourseService.deleteCourse(userDetails.getMemberId(), courseId);
 		return ResponseEntity.noContent().build();
+	}
+
+	public ResponseEntity<CustomApiResponse> checkLecture(
+		@RequestParam(name = "lectureId") Long lectureId,
+		@AuthenticationPrincipal CustomUserDetails userDetails,
+		@RequestParam(name = "courseId") Long courseId,
+		@RequestBody LectureRequest request
+	){
+		commandCourseService.updateLectureCheck(userDetails.getMemberId(), lectureId, courseId, request.isCheck());
+		return ResponseEntity.ok().build();
 	}
 }

@@ -1,8 +1,8 @@
 package com.server.dori.domain.course.presentation.dto.request;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "강의 등록 요청 DTO")
 public record CourseRequest(
@@ -43,7 +43,8 @@ public record CourseRequest(
 
 		@Schema(description = "추천 대상 설명", example = "문학에 약한 학생에게 추천")
 		String recommend
-	) {}
+	) {
+	}
 
 	@Schema(description = "강의(lecture) DTO")
 	public record LectureDto(
@@ -53,5 +54,6 @@ public record CourseRequest(
 
 		@Schema(description = "강의 정보", example = "수업 내용에 대한 오리엔테이션입니다.")
 		String info
-	) {}
+	) {
+	}
 }
