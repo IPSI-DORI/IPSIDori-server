@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/api/v1/**")
-			.allowedOrigins("http://localhost:3000", "http://localhost:8080", "https://ipsidori.o-r.kr")
+			.allowedOrigins("http://localhost:3000", "http://localhost:8080", "https://ipsidori.o-r.kr", "https://ipsi-frontend.vercel.app/#/auth ")
 			.allowedMethods("GET", "POST", "PUT", "DELETE")
 			.allowedHeaders("*")
 			.allowCredentials(true); // 쿠키
