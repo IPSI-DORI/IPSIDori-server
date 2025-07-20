@@ -35,13 +35,13 @@ public interface AuthApiController {
 
 	@Operation(
 		summary = "카카오 로그인",
-		description = "카카오 인가코드를 받아 JWT 토큰을 발급합니다. "
+		description = "카카오 액세스 토큰을 받아 JWT 토큰을 발급합니다. "
 			+ "Response Header에 Authorization(액세스 토큰)과 Refresh-Token(리프레시 토큰)이 포함되고, "
 			+ "Response Body에 회원가입 완료 여부가 포함됩니다."
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "JWT 토큰 발급 성공"),
-		@ApiResponse(responseCode = "400", description = "유효하지 않은 인가코드"),
+		@ApiResponse(responseCode = "400", description = "유효하지 않은 카카오 액세스 토큰"),
 		@ApiResponse(responseCode = "404", description = "소셜 로그인 사용자 정보를 찾을 수 없음")
 	})
 	@PostMapping("/oauth2/kakao")

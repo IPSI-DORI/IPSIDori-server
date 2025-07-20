@@ -44,7 +44,7 @@ public class MemberController {
 
 	@Operation(
 		summary = "회원가입 (추가 정보 입력)",
-		description = "OAuth2 로그인 후 발급받은 토큰으로 추가 정보를 입력하여 회원가입을 완료합니다."
+		description = "카카오 로그인 후 발급받은 토큰으로 추가 정보를 입력하여 회원가입을 완료합니다."
 	)
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "회원가입 성공"),
