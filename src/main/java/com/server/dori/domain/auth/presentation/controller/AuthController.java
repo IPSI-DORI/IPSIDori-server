@@ -10,6 +10,7 @@ import com.server.dori.domain.auth.presentation.dto.response.KakaoLoginResponse;
 import com.server.dori.domain.auth.presentation.dto.response.TokenDto;
 import com.server.dori.domain.auth.service.CommandAuthService;
 import com.server.dori.domain.auth.service.QueryAuthService;
+import com.server.dori.domain.auth.service.dto.KakaoLoginResult;
 import com.server.dori.global.response.CustomApiResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class AuthController implements AuthApiController {
 
 	@Override
 	public ResponseEntity<CustomApiResponse<KakaoLoginResponse>> kakaoLogin(KakaoLoginRequest request) {
-		CommandAuthService.KakaoLoginResult result = commandAuthService.kakaoLogin(request);
+		KakaoLoginResult result = commandAuthService.kakaoLogin(request);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", result.tokenDto().grantType() + " " + result.tokenDto().accessToken());
